@@ -1,10 +1,13 @@
+package ss1_java.thuc_hanh;
+
 import java.util.Scanner;
+
 public class DayOfMonth {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Which month that you want to count days? ");
         int month = scanner.nextInt();
-        switch (month){
+        switch (month) {
             case 2:
                 System.out.println("The month '2' has 28 or 29 days!");
             case 1:
