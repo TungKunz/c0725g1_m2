@@ -1,5 +1,3 @@
-package ss1_java.bai_tap;
-
 import java.util.Scanner;
 
 public class SayHello {

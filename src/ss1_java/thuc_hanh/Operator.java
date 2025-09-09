@@ -1,5 +1,3 @@
-package ss1_java.thuc_hanh;
-
 import java.util.Scanner;
 
 public class Operator {
