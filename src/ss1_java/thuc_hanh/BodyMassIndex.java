@@ -1,4 +1,4 @@
-
+package ss1_java.thuc_hanh;
 import java.util.Scanner;
 
 public class BodyMassIndex {
@@ -23,4 +23,5 @@ public class BodyMassIndex {
         else
             System.out.printf("%-20.2f%s", bmi, "Obese");
     }
+
 }
