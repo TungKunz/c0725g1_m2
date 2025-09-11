@@ -1,8 +1,8 @@
-package ss4_object_class.bai_tap;
+package ss4_object_class.bai_tap.StopWatch;
 
 import java.util.Random;
 
-public class SortTest {
+public class Main {
     public static void selectionSort(int[] arr) {
         for (int i = 0; i < arr.length - 1; i++) {
             int minIndex = i;

@@ -1,4 +1,4 @@
-package ss4_object_class.bai_tap;
+package ss4_object_class.bai_tap.StopWatch;
 
 public class StopWatch {
     private long startTime;
@@ -31,11 +31,4 @@ public class StopWatch {
         return this.endTime - this.startTime;
     }
 
-
-    public static void main(String[] args) throws InterruptedException {
-        StopWatch sw = new StopWatch();
-        Thread.sleep(3000);
-        sw.stop();
-        System.out.println("Thời gian chạy: " + sw.getElapsedTime() + " ms");
-    }
 }
