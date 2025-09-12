@@ -1,10 +1,10 @@
-package menuManager;
+package menuManager.menuManager;
 
 import java.util.Scanner;
 
 public class Menu {
     static StudentManager studentManager= new StudentManager();
-    static Student [] student = studentManager.getStudents();
+    static Student[] student = studentManager.getStudents();
     static int count=1;
     public static void main(String[] args) {
         display();

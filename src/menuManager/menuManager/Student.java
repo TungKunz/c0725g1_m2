@@ -1,4 +1,4 @@
-package menuManager;
+package menuManager.menuManager;
 
 public class Student {
     private int id;
