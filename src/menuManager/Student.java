@@ -3,16 +3,23 @@ package menuManager;
 public class Student {
     private int id;
     private String name;
-    private byte age;
-    private String address;
+    private float price;
     Student(){
     }
 
-     Student(int id, String name, byte age, String address) {
+     Student(int id, String name, float price) {
         this.id = id;
         this.name = name;
-        this.age = age;
-        this.address = address;
+        this.price = price;
+    }
+
+    @Override
+    public String toString() {
+        return "Student{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", price=" + price +
+                '}';
     }
 
     public int getId() {
@@ -31,29 +38,11 @@ public class Student {
         this.name = name;
     }
 
-    public byte getAge() {
-        return age;
+    public float getPrice() {
+        return price;
     }
 
-    public void setAge(byte age) {
-        this.age = age;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
-
-    @Override
-    public String toString() {
-        return "Student{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", age=" + age +
-                ", address='" + address + '\'' +
-                '}';
+    public void setPrice(float price) {
+        this.price = price;
     }
 }

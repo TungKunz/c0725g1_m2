@@ -15,11 +15,16 @@ public class Menu {
         Scanner scanner = new Scanner(System.in);
 
         while (flag){
-            System.out.println("-----Quản lý sinh viên-----" +
-                                "\n 1. Hiển thị danh sách sinh viên."+
-                                "\n 2. Thêm sinh viên."+
-                                "\n 3. Xóa sinh viên"+
-                                "\n 4. Thoát.");
+            System.out.println("""
+                    -----Quản lý sinh viên-----\
+                    
+                     1. Hiển thị danh sách sinh viên.\
+                    
+                     2. Thêm sinh viên.\
+                    
+                     3. Xóa sinh viên\
+                    
+                     4. Thoát.""");
             System.out.println("---Chọn yêu cầu---");
             byte choice = Byte.parseByte(scanner.nextLine());
             switch (choice){
@@ -29,13 +34,13 @@ public class Menu {
                         System.out.println("Danh sách trống!!!");
                         break;
                     }
-                    for (int i = 0; i < student.length; i++) {
-                        if(student[i] != null){
-                            System.out.println(student[i]);
-                        }else {
+                    for (Student value : student) {
+                        if (value != null) {
+                            System.out.println(value);
+                        } else {
                             break;
                         }
-                        
+
                     }
                     break;
                 case 2:
@@ -46,11 +51,9 @@ public class Menu {
                     System.out.println("Thêm sinh viên");
                     System.out.println("Nhập tên: ");
                     String name=scanner.nextLine();
-                    System.out.println("Nhập tuổi: ");
-                    byte age = Byte.parseByte(scanner.nextLine());
-                    System.out.println("Nhập địa chỉ: ");
-                    String address=scanner.nextLine();
-                    Student newStudent = new Student(count,name,age,address);
+                    System.out.println("Nhập giá: ");
+                    float price = Byte.parseByte(scanner.nextLine());
+                    Student newStudent = new Student(count,name,price);
                     count++;
                     studentManager.addStudent(newStudent);
                     System.out.println(" Đã thêm sinh viên!");
