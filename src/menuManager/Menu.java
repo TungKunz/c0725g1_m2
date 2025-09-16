@@ -32,7 +32,7 @@ public class Menu {
             switch (choice){
                 case 1:
                     System.out.println("hiển thị danh sách");
-                    if (count == 1) {
+                    if (count == 0) {
                         System.out.println("Danh sách trống!!!");
                         break;
                     }
@@ -70,6 +70,7 @@ public class Menu {
                         if (student[i] != null && student[i].getId() == deleteId) {
                             for (int j = i; j < count - 1; j++) {
                                 student[j] = student[j + 1];
+                                student[j].setId(i);
                             }
                             student[count - 1] = null;
                             count--;
