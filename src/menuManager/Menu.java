@@ -8,7 +8,6 @@ public class Menu {
     static int count=0;
     public static void main(String[] args) {
         display();
-
     }
     public static void display(){
         boolean flag=true;
