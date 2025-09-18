@@ -12,9 +12,12 @@ import java.util.Scanner;
 
 public class MenuManagerVehicleController {
     private static Scanner scanner = new Scanner(System.in);
-    private static ICarService carManager = new CarService();
-    private static ITruckService truckManager = new TruckService();
-    private static IMotorbikeService motorbikeManager = new MotorbikeService();
+    private static IVehicleService<CarEntity> carManager = new CarService();
+    private static IVehicleService<TruckEntity> truckManager = new TruckService();
+    private static IVehicleService<MotorbikeEntity> motorbikeManager = new MotorbikeService();
+
+
+    private static CarEntity carEntity = new CarEntity();
 
     public static void showMenu() {
         while (true) {
@@ -22,7 +25,9 @@ public class MenuManagerVehicleController {
             System.out.println("1. Thêm mới phương tiện");
             System.out.println("2. Hiển thị phương tiện");
             System.out.println("3. Xóa phương tiện");
-            System.out.println("4. Thoát");
+            System.out.println("4. Tìm kiếm phương tiện");
+            System.out.println("5. Sửa thông tin phương tiện");
+            System.out.println("6. Thoát");
             System.out.print("Chọn chức năng: ");
 
             int choice = Integer.parseInt(scanner.nextLine());
@@ -38,6 +43,12 @@ public class MenuManagerVehicleController {
                     showDeleteMenu();
                     break;
                 case 4:
+                    showSearchVehicle();
+                    break;
+                case 5:
+                    showEditVehicle();
+                    break;
+                case 6:
                     System.out.println("Thoát chương trình...");
                     return;
                 default:
@@ -75,41 +86,30 @@ public class MenuManagerVehicleController {
     }
 
     static void showDeleteMenu() {
-        System.out.println("1. Xóa xe tải");
-        System.out.println("2. Xóa ô tô");
-        System.out.println("3. Xóa xe máy");
-        System.out.print("Chọn loại phương tiện: ");
-        int type = Integer.parseInt(scanner.nextLine());
+        System.out.print("Nhập biển kiểm soát cần xóa: ");
+        String numberPlate = scanner.nextLine();
+        IVehicleService<?>[] services = new IVehicleService[]{carManager, truckManager, motorbikeManager};
+        for (IVehicleService<?> service : services) {
+            int index = service.searchId(numberPlate);
+            if (index != -1) {
+                String vehicleType = "";
+                if (service instanceof CarService) vehicleType = "ô tô";
+                else if (service instanceof TruckService) vehicleType = "xe tải";
+                else if (service instanceof MotorbikeService) vehicleType = "xe máy";
 
-        switch (type) {
-            case 1:
-                String numberPlateDeleteTruck = TruckView.inputNumberPlateForDelete();
-                boolean isDeletedTruck = truckManager.deleteById(numberPlateDeleteTruck);
-                if (isDeletedTruck) {
-                    System.out.println("Xóa thành công!");
+                System.out.print("Tìm thấy " + vehicleType + " có BKS " + numberPlate + ". Bạn có chắc muốn xóa? (Yes/No): ");
+                String confirm = scanner.nextLine();
+                if (confirm.equalsIgnoreCase("Yes")) {
+                    service.deleteById(numberPlate);
+                    System.out.println("Đã xóa " + vehicleType + " thành công!");
                 } else {
-                    System.out.println("Không tìm thấy xe có biển số: " + numberPlateDeleteTruck);
+                    System.out.println("Hủy thao tác.");
                 }
-                break;
-            case 2:
-                String numberPlateDeleteCar = CarView.inputNumberPlateForDelete();
-                boolean isDeletedCar = carManager.deleteById(numberPlateDeleteCar);
-                if (isDeletedCar) {
-                    System.out.println("Xóa thành công!");
-                } else {
-                    System.out.println("Không tìm thấy xe có biển số: " + numberPlateDeleteCar);
-                }
-                break;
-            case 3:
-                String numberPlateDeleteMotor = MotorbikeView.inputNumberPlateForDelete();
-                boolean isDeletedMotor = carManager.deleteById(numberPlateDeleteMotor);
-                if (isDeletedMotor) {
-                    System.out.println("Xóa thành công!");
-                } else {
-                    System.out.println("Không tìm thấy xe có biển số: " + numberPlateDeleteMotor);
-                }
-                break;
+                return;
+            }
         }
+
+        System.out.println("Không tìm thấy phương tiện có biển số: " + numberPlate);
     }
 
     static void showDisplayMenu() {
@@ -135,9 +135,78 @@ public class MenuManagerVehicleController {
                 MotorbikeEntity[] motorbikeEntities = motorbikeManager.findAll();
                 MotorbikeView.showList(motorbikeEntities);
                 break;
+
         }
     }
 
+    static void showSearchVehicle() {
+        System.out.print("Nhập biển kiểm soát cần tìm: ");
+        String numberPlate = scanner.nextLine();
 
+        IVehicleService<?>[] services = new IVehicleService[]{carManager, truckManager, motorbikeManager};
+
+        for (IVehicleService<?> service : services) {
+            int index = service.searchId(numberPlate);
+            if (index != -1) {
+                Object[] vehicles = service.findAll();
+                Object vehicle = vehicles[index];
+                System.out.println("Tìm thấy " + service.getVehicleType() + " có BKS " + numberPlate);
+                System.out.println(vehicle.toString());
+                return;
+            }
+
+        }
+
+        System.out.println("Không tìm thấy phương tiện có biển số: " + numberPlate);
+    }
+
+    static void showEditVehicle() {
+        System.out.print("Nhập biển kiểm soát cần sửa: ");
+        String numberPlate = scanner.nextLine();
+
+        IVehicleService<?>[] services = new IVehicleService[]{carManager, truckManager, motorbikeManager};
+
+        for (IVehicleService<?> service : services) {
+            int index = service.searchId(numberPlate);
+            if (index != -1) {
+                String vehicleType = "";
+                if (service instanceof CarService) {
+                    vehicleType = "ô tô";
+                    CarEntity[] cars = ((CarService) service).findAll();
+                    CarEntity oldCar = cars[index];
+                    System.out.println("Thông tin cũ: " + oldCar);
+
+                    CarEntity newCarData = CarView.inputDataForCar();
+                    newCarData.setNumberPlate(oldCar.getNumberPlate()); // giữ nguyên biển số
+                    ((CarService) service).edit(newCarData, index);
+
+                } else if (service instanceof TruckService) {
+                    vehicleType = "xe tải";
+                    TruckEntity[] trucks = ((TruckService) service).findAll();
+                    TruckEntity oldTruck = trucks[index];
+                    System.out.println("Thông tin cũ: " + oldTruck);
+
+                    TruckEntity newTruckData = TruckView.inputDataForTruck();
+                    newTruckData.setNumberPlate(oldTruck.getNumberPlate());
+                    ((TruckService) service).edit(newTruckData, index);
+
+                } else if (service instanceof MotorbikeService) {
+                    vehicleType = "xe máy";
+                    MotorbikeEntity[] motors = ((MotorbikeService) service).findAll();
+                    MotorbikeEntity oldMotor = motors[index];
+                    System.out.println("Thông tin cũ: " + oldMotor);
+
+                    MotorbikeEntity newMotorData = MotorbikeView.inputDataForMotorbike();
+                    newMotorData.setNumberPlate(oldMotor.getNumberPlate());
+                    ((MotorbikeService) service).edit(newMotorData, index);
+                }
+
+                System.out.println("Đã cập nhật thông tin " + vehicleType + " thành công!");
+                return;
+            }
+        }
+
+        System.out.println("Không tìm thấy phương tiện có biển số: " + numberPlate);
+    }
 }
 

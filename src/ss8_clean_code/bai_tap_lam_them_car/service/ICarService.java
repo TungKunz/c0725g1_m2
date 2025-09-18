@@ -6,4 +6,6 @@ public interface ICarService {
     CarEntity[] findAll();
     void add (CarEntity car);
     boolean deleteById(String numberPlate);
+    int searchId(String numberPlate);
+    void edit(CarEntity newCarData, int index);
 }

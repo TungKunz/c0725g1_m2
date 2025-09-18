@@ -37,4 +37,9 @@ public class TruckView {
         System.out.print("Nhập biển kiểm soát: ");
         return scanner.nextLine();
     }
+    public static String inputNumberPlateForSearch(){
+        System.out.println("Tìm xe");
+        System.out.println("Nhập biển kiểm soát: ");
+        return scanner.nextLine();
+    }
 }

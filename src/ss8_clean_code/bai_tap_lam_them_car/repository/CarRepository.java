@@ -2,7 +2,7 @@ package ss8_clean_code.bai_tap_lam_them_car.repository;
 
 import ss8_clean_code.bai_tap_lam_them_car.entity.CarEntity;
 
-public class CarRepository implements ICarRepository{
+public class CarRepository implements IVehicleRepository<CarEntity> {
     private static  CarEntity[] carEntities = new CarEntity[100];
     @Override
     public CarEntity[] findAll(){
@@ -36,4 +36,25 @@ public class CarRepository implements ICarRepository{
         }
         return check;
     }
+
+    @Override
+    public int searchId(String numberPlate) {
+        int index = -1;
+        for (int i = 0; i < carEntities.length; i++) {
+            if (carEntities[i] != null && carEntities[i].getNumberPlate().equals(numberPlate)) {
+                index = i;
+                break;
+            }
+        }
+        return index;
+    }
+
+    @Override
+    public void edit(CarEntity vehicle, int index) {
+        if (index >= 0 && index < carEntities.length && carEntities[index] != null) {
+            carEntities[index] = vehicle;
+        }
+    }
+
+
 }

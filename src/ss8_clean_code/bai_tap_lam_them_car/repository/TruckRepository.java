@@ -1,13 +1,34 @@
 package ss8_clean_code.bai_tap_lam_them_car.repository;
+import ss8_clean_code.bai_tap_lam_them_car.entity.MotorbikeEntity;
 import ss8_clean_code.bai_tap_lam_them_car.entity.TruckEntity;
 
-public class TruckRepository implements ITruckRepository{
+public class TruckRepository implements IVehicleRepository<TruckEntity>{
     public static TruckEntity[] truckEntities=new TruckEntity[100];
     public static int size=0;
     @Override
     public TruckEntity[] findAll() {
         return truckEntities;
     }
+
+    @Override
+    public int searchId(String numberPlate) {
+        int index = -1;
+        for (int i = 0; i < truckEntities.length; i++) {
+            if (truckEntities[i] != null && truckEntities[i].getNumberPlate().equals(numberPlate)) {
+                index = i;
+                break;
+            }
+        }
+        return index;
+    }
+
+    @Override
+    public void edit(TruckEntity vehicle, int index) {
+        if (index >= 0 && index < truckEntities.length && truckEntities[index] != null) {
+            truckEntities[index] = vehicle;
+        }
+    }
+
 
     @Override
     public void add (TruckEntity truck){
