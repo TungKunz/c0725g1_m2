@@ -9,6 +9,7 @@ public class TruckRepository implements IVehicleRepository<Truck> {
 
     @Override
     public List<Truck> findAll() {
+
         return new ArrayList<>(truckEntities);
     }
 
@@ -31,11 +32,13 @@ public class TruckRepository implements IVehicleRepository<Truck> {
 
     @Override
     public void add(Truck truck) {
+
         truckEntities.add(truck);
     }
 
     @Override
     public boolean deleteById(String numberPlate) {
-        return truckEntities.removeIf(t -> t.getNumberPlate().equals(numberPlate));
+        return truckEntities.removeIf(
+                t -> t.getNumberPlate().equals(numberPlate));
     }
 }

@@ -9,17 +9,19 @@ public class CarRepository implements IVehicleRepository<Car> {
 
     @Override
     public List<Car> findAll() {
-        return new ArrayList<>(carEntities); // trả bản copy tránh lỗi ngoài ý muốn
+        return new ArrayList<>(carEntities);
     }
 
     @Override
     public void add(Car car) {
+
         carEntities.add(car);
     }
 
     @Override
     public boolean deleteById(String numberPlate) {
-        return carEntities.removeIf(c -> c.getNumberPlate().equals(numberPlate));
+        return carEntities.removeIf(
+                car -> car.getNumberPlate().equals(numberPlate));
     }
 
     @Override

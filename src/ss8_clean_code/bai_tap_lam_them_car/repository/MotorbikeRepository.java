@@ -9,6 +9,7 @@ public class MotorbikeRepository implements IVehicleRepository<Motorbike> {
 
     @Override
     public List<Motorbike> findAll() {
+
         return new ArrayList<>(motorbikeEntities);
     }
 
@@ -36,6 +37,7 @@ public class MotorbikeRepository implements IVehicleRepository<Motorbike> {
 
     @Override
     public boolean deleteById(String numberPlate) {
-        return motorbikeEntities.removeIf(m -> m.getNumberPlate().equals(numberPlate));
+        return motorbikeEntities.removeIf(
+                m -> m.getNumberPlate().equals(numberPlate));
     }
 }
