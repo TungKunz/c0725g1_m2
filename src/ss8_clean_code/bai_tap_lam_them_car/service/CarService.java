@@ -1,21 +1,21 @@
 package ss8_clean_code.bai_tap_lam_them_car.service;
 
-import ss8_clean_code.bai_tap_lam_them_car.entity.CarEntity;
+import ss8_clean_code.bai_tap_lam_them_car.entity.Car;
 import ss8_clean_code.bai_tap_lam_them_car.repository.CarRepository;
 import ss8_clean_code.bai_tap_lam_them_car.repository.IVehicleRepository;
 
 import java.util.List;
 
-public class CarService implements IVehicleService<CarEntity> {
-    private IVehicleRepository<CarEntity> carRepository = new CarRepository();
+public class CarService implements IVehicleService<Car> {
+    private IVehicleRepository<Car> carRepository = new CarRepository();
 
     @Override
-    public List<CarEntity> findAll() {
+    public List<Car> findAll() {
         return carRepository.findAll();
     }
 
     @Override
-    public void add(CarEntity car) {
+    public void add(Car car) {
         carRepository.add(car);
     }
 
@@ -30,7 +30,7 @@ public class CarService implements IVehicleService<CarEntity> {
     }
 
     @Override
-    public void edit(CarEntity newCarData, int index) {
+    public void edit(Car newCarData, int index) {
         carRepository.edit(newCarData, index);
     }
 

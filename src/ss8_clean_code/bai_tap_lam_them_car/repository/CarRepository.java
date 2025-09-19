@@ -1,19 +1,19 @@
 package ss8_clean_code.bai_tap_lam_them_car.repository;
 
-import ss8_clean_code.bai_tap_lam_them_car.entity.CarEntity;
+import ss8_clean_code.bai_tap_lam_them_car.entity.Car;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CarRepository implements IVehicleRepository<CarEntity> {
-    private static List<CarEntity> carEntities = new ArrayList<>();
+public class CarRepository implements IVehicleRepository<Car> {
+    private static List<Car> carEntities = new ArrayList<>();
 
     @Override
-    public List<CarEntity> findAll() {
+    public List<Car> findAll() {
         return new ArrayList<>(carEntities); // trả bản copy tránh lỗi ngoài ý muốn
     }
 
     @Override
-    public void add(CarEntity car) {
+    public void add(Car car) {
         carEntities.add(car);
     }
 
@@ -33,7 +33,7 @@ public class CarRepository implements IVehicleRepository<CarEntity> {
     }
 
     @Override
-    public void edit(CarEntity vehicle, int index) {
+    public void edit(Car vehicle, int index) {
         if (index >= 0 && index < carEntities.size()) {
             carEntities.set(index, vehicle);
         }

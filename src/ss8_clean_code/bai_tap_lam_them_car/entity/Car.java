@@ -1,10 +1,10 @@
 package ss8_clean_code.bai_tap_lam_them_car.entity;
 
-public class CarEntity extends VehicleEntity {
+public class Car extends Vehicle {
     private int numberOfSeats;
     private String carType;
-    public CarEntity(){}
-    public CarEntity(String numberPlate, String manufacturerName, int manufactureYear, String owner, int numberOfSeats, String carType){
+    public Car(){}
+    public Car(String numberPlate, String manufacturerName, int manufactureYear, String owner, int numberOfSeats, String carType){
         super(numberPlate,manufacturerName,manufactureYear,owner);
         this.numberOfSeats=numberOfSeats;
         this.carType=carType;

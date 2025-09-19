@@ -1,6 +1,6 @@
 package ss8_clean_code.bai_tap_lam_them_car.view;
 
-import ss8_clean_code.bai_tap_lam_them_car.entity.MotorbikeEntity;
+import ss8_clean_code.bai_tap_lam_them_car.entity.Motorbike;
 
 import java.util.List;
 import java.util.Scanner;
@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class MotorbikeView {
     private static Scanner scanner = new Scanner(System.in);
 
-    public static void showList(List<MotorbikeEntity> motorbikes) {
+    public static void showList(List<Motorbike> motorbikes) {
         if (motorbikes.isEmpty()) {
             System.out.println("Danh sách xe máy trống!");
             return;
@@ -18,12 +18,12 @@ public class MotorbikeView {
                 "Biển số", "Hãng SX", "Năm SX", "Chủ sở hữu", "Công suất");
         System.out.println("-----------------------------------------------------------------");
 
-        for (MotorbikeEntity bike : motorbikes) {
+        for (Motorbike bike : motorbikes) {
             System.out.println(bike);
         }
     }
 
-    public static MotorbikeEntity inputDataForMotorbike() {
+    public static Motorbike inputDataForMotorbike() {
         System.out.println("Thêm mới xe máy");
         System.out.print("Nhập biển kiểm soát: ");
         String numberPlate = scanner.nextLine();
@@ -36,7 +36,7 @@ public class MotorbikeView {
         System.out.print("Nhập công suất của xe: ");
         int power = Integer.parseInt(scanner.nextLine());
 
-        return new MotorbikeEntity(numberPlate, manufacturerName, manufactureYear, owner, power);
+        return new Motorbike(numberPlate, manufacturerName, manufactureYear, owner, power);
     }
 
     public static String inputNumberPlateForDelete() {

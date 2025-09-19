@@ -1,14 +1,14 @@
 package ss8_clean_code.bai_tap_lam_them_car.entity;
 
-public abstract class VehicleEntity {
+public abstract class Vehicle {
 
     private String numberPlate; //biển kiểm soát
     private String manufacturerName; //tên hãng
     private int manufactureYear; //năm sản xuất
     private String owner; //chủ sở hữu
-    public VehicleEntity(){
+    public Vehicle(){
     }
-    public VehicleEntity(String numberPlate, String manufacturerName, int manufactureYear, String owner){
+    public Vehicle(String numberPlate, String manufacturerName, int manufactureYear, String owner){
         this.numberPlate=numberPlate;
         this.manufacturerName=manufacturerName;
         this.manufactureYear=manufactureYear;

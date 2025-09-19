@@ -1,14 +1,14 @@
 package ss8_clean_code.bai_tap_lam_them_car.repository;
 
-import ss8_clean_code.bai_tap_lam_them_car.entity.MotorbikeEntity;
+import ss8_clean_code.bai_tap_lam_them_car.entity.Motorbike;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MotorbikeRepository implements IVehicleRepository<MotorbikeEntity> {
-    private static List<MotorbikeEntity> motorbikeEntities = new ArrayList<>();
+public class MotorbikeRepository implements IVehicleRepository<Motorbike> {
+    private static List<Motorbike> motorbikeEntities = new ArrayList<>();
 
     @Override
-    public List<MotorbikeEntity> findAll() {
+    public List<Motorbike> findAll() {
         return new ArrayList<>(motorbikeEntities);
     }
 
@@ -23,14 +23,14 @@ public class MotorbikeRepository implements IVehicleRepository<MotorbikeEntity> 
     }
 
     @Override
-    public void edit(MotorbikeEntity vehicle, int index) {
+    public void edit(Motorbike vehicle, int index) {
         if (index >= 0 && index < motorbikeEntities.size()) {
             motorbikeEntities.set(index, vehicle);
         }
     }
 
     @Override
-    public void add(MotorbikeEntity motorbike) {
+    public void add(Motorbike motorbike) {
         motorbikeEntities.add(motorbike);
     }
 

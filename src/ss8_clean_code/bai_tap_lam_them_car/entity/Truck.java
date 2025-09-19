@@ -1,12 +1,12 @@
 package ss8_clean_code.bai_tap_lam_them_car.entity;
 
-public class TruckEntity extends VehicleEntity {
+public class Truck extends Vehicle {
     private int loadCapacity;
 
-    public TruckEntity() {
+    public Truck() {
     }
 
-    public TruckEntity(String numberPlate, String manufacturerName, int manufactureYear, String owner, int loadCapacity) {
+    public Truck(String numberPlate, String manufacturerName, int manufactureYear, String owner, int loadCapacity) {
         super(numberPlate, manufacturerName, manufactureYear, owner);
         this.loadCapacity = loadCapacity;
     }

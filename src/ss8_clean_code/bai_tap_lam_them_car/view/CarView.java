@@ -1,6 +1,6 @@
 package ss8_clean_code.bai_tap_lam_them_car.view;
 
-import ss8_clean_code.bai_tap_lam_them_car.entity.CarEntity;
+import ss8_clean_code.bai_tap_lam_them_car.entity.Car;
 
 import java.util.List;
 import java.util.Scanner;
@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class CarView {
     private static Scanner scanner = new Scanner(System.in);
 
-    public static void showList(List<CarEntity> carEntities) {
+    public static void showList(List<Car> carEntities) {
         if (carEntities.isEmpty()) {
             System.out.println("Danh sách xe trống!");
             return;
@@ -18,12 +18,12 @@ public class CarView {
                 "Biển số", "Hãng SX", "Năm SX", "Chủ sở hữu", "Số chỗ", "Kiểu xe");
         System.out.println("-------------------------------------------------------------------------------");
 
-        for (CarEntity car : carEntities) {
+        for (Car car : carEntities) {
             System.out.println(car);
         }
     }
 
-    public static CarEntity inputDataForCar() {
+    public static Car inputDataForCar() {
         System.out.println("Thêm mới");
         System.out.print("Nhập biển kiểm soát: ");
         String numberPlate = scanner.nextLine();
@@ -38,7 +38,7 @@ public class CarView {
         System.out.print("Nhập kiểu xe: ");
         String carType = scanner.nextLine();
 
-        return new CarEntity(numberPlate, manufacturerName, manufactureYear, owner, numberOfSeats, carType);
+        return new Car(numberPlate, manufacturerName, manufactureYear, owner, numberOfSeats, carType);
     }
 
     public static String inputNumberPlateForDelete() {
@@ -53,7 +53,7 @@ public class CarView {
         return scanner.nextLine();
     }
 
-    public static CarEntity inputEditDataForCar() {
+    public static Car inputEditDataForCar() {
         System.out.println("Sửa thông tin xe");
         System.out.print("Nhập biển kiểm soát: ");
         String numberPlate = scanner.nextLine();
@@ -68,6 +68,6 @@ public class CarView {
         System.out.print("Nhập kiểu xe: ");
         String carType = scanner.nextLine();
 
-        return new CarEntity(numberPlate, manufacturerName, manufactureYear, owner, numberOfSeats, carType);
+        return new Car(numberPlate, manufacturerName, manufactureYear, owner, numberOfSeats, carType);
     }
 }

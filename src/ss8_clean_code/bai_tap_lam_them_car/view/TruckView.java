@@ -1,6 +1,6 @@
 package ss8_clean_code.bai_tap_lam_them_car.view;
 
-import ss8_clean_code.bai_tap_lam_them_car.entity.TruckEntity;
+import ss8_clean_code.bai_tap_lam_them_car.entity.Truck;
 
 import java.util.List;
 import java.util.Scanner;
@@ -8,7 +8,7 @@ import java.util.Scanner;
 public class TruckView {
     private static Scanner scanner = new Scanner(System.in);
 
-    public static void showList(List<TruckEntity> trucks) {
+    public static void showList(List<Truck> trucks) {
         if (trucks.isEmpty()) {
             System.out.println("Danh sách xe tải trống!");
             return;
@@ -18,12 +18,12 @@ public class TruckView {
                 "Biển số", "Hãng SX", "Năm SX", "Chủ sở hữu", "Trọng tải");
         System.out.println("-----------------------------------------------------------------");
 
-        for (TruckEntity truck : trucks) {
+        for (Truck truck : trucks) {
             System.out.println(truck);
         }
     }
 
-    public static TruckEntity inputDataForTruck() {
+    public static Truck inputDataForTruck() {
         System.out.println("Thêm mới xe tải");
         System.out.print("Nhập biển kiểm soát: ");
         String numberPlate = scanner.nextLine();
@@ -36,7 +36,7 @@ public class TruckView {
         System.out.print("Nhập trọng tải của xe: ");
         int loadCapacity = Integer.parseInt(scanner.nextLine());
 
-        return new TruckEntity(numberPlate, manufacturerName, manufactureYear, owner, loadCapacity);
+        return new Truck(numberPlate, manufacturerName, manufactureYear, owner, loadCapacity);
     }
 
     public static String inputNumberPlateForDelete() {

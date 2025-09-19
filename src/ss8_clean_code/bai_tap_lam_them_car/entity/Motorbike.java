@@ -1,12 +1,12 @@
 package ss8_clean_code.bai_tap_lam_them_car.entity;
 
-public class MotorbikeEntity extends VehicleEntity {
+public class Motorbike extends Vehicle {
     private int power;
 
-    public MotorbikeEntity() {
+    public Motorbike() {
     }
 
-    public MotorbikeEntity(String numberPlate, String manufacturerName, int manufactureYear, String owner, int power) {
+    public Motorbike(String numberPlate, String manufacturerName, int manufactureYear, String owner, int power) {
         super(numberPlate, manufacturerName, manufactureYear, owner);
         this.power = power;
     }

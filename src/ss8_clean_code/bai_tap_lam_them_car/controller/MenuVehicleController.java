@@ -1,8 +1,8 @@
 package ss8_clean_code.bai_tap_lam_them_car.controller;
 
-import ss8_clean_code.bai_tap_lam_them_car.entity.CarEntity;
-import ss8_clean_code.bai_tap_lam_them_car.entity.MotorbikeEntity;
-import ss8_clean_code.bai_tap_lam_them_car.entity.TruckEntity;
+import ss8_clean_code.bai_tap_lam_them_car.entity.Car;
+import ss8_clean_code.bai_tap_lam_them_car.entity.Motorbike;
+import ss8_clean_code.bai_tap_lam_them_car.entity.Truck;
 import ss8_clean_code.bai_tap_lam_them_car.service.*;
 import ss8_clean_code.bai_tap_lam_them_car.view.CarView;
 import ss8_clean_code.bai_tap_lam_them_car.view.MotorbikeView;
@@ -11,11 +11,11 @@ import ss8_clean_code.bai_tap_lam_them_car.view.TruckView;
 import java.util.List;
 import java.util.Scanner;
 
-public class MenuManagerVehicleController {
+public class MenuVehicleController {
     private static Scanner scanner = new Scanner(System.in);
-    private static IVehicleService<CarEntity> carManager = new CarService();
-    private static IVehicleService<TruckEntity> truckManager = new TruckService();
-    private static IVehicleService<MotorbikeEntity> motorbikeManager = new MotorbikeService();
+    private static IVehicleService<Car> carManager = new CarService();
+    private static IVehicleService<Truck> truckManager = new TruckService();
+    private static IVehicleService<Motorbike> motorbikeManager = new MotorbikeService();
 
     public static void showMenu() {
         while (true) {
@@ -45,7 +45,7 @@ public class MenuManagerVehicleController {
         }
     }
 
-    public static void showAddMenu() {
+    private static void showAddMenu() {
         System.out.println("1. Thêm xe tải");
         System.out.println("2. Thêm ô tô");
         System.out.println("3. Thêm xe máy");
@@ -54,17 +54,17 @@ public class MenuManagerVehicleController {
 
         switch (type) {
             case 1 -> {
-                TruckEntity truck = TruckView.inputDataForTruck();
+                Truck truck = TruckView.inputDataForTruck();
                 truckManager.add(truck);
                 System.out.println("Thêm mới thành công");
             }
             case 2 -> {
-                CarEntity car = CarView.inputDataForCar();
+                Car car = CarView.inputDataForCar();
                 carManager.add(car);
                 System.out.println("Thêm mới thành công");
             }
             case 3 -> {
-                MotorbikeEntity motorbike = MotorbikeView.inputDataForMotorbike();
+                Motorbike motorbike = MotorbikeView.inputDataForMotorbike();
                 motorbikeManager.add(motorbike);
                 System.out.println("Thêm mới thành công");
             }
@@ -72,31 +72,60 @@ public class MenuManagerVehicleController {
         }
     }
 
-    static void showDeleteMenu() {
+    private static void showDeleteMenu() {
         System.out.print("Nhập biển kiểm soát cần xóa: ");
         String numberPlate = scanner.nextLine();
-        IVehicleService<?>[] services = new IVehicleService[]{carManager, truckManager, motorbikeManager};
 
-        for (IVehicleService<?> service : services) {
-            int index = service.searchId(numberPlate);
-            if (index != -1) {
-                String vehicleType = service.getVehicleType();
-
-                System.out.print("Tìm thấy " + vehicleType + " có BKS " + numberPlate + ". Bạn có chắc muốn xóa? (Yes/No): ");
-                String confirm = scanner.nextLine();
-                if (confirm.equalsIgnoreCase("Yes")) {
-                    service.deleteById(numberPlate);
-                    System.out.println("Đã xóa " + vehicleType + " thành công!");
-                } else {
-                    System.out.println("Hủy thao tác.");
-                }
-                return;
+        int carIndex = carManager.searchId(numberPlate);
+        if (carIndex != -1) {
+            List<Car> cars = carManager.findAll();
+            Car car = cars.get(carIndex);
+            System.out.print("Tìm thấy ô tô có BKS " + numberPlate + ". Bạn có chắc muốn xóa? (Yes/No): ");
+            String confirm = scanner.nextLine();
+            if (confirm.equalsIgnoreCase("Yes")) {
+                carManager.deleteById(numberPlate);
+                System.out.println("Đã xóa ô tô thành công!");
+            } else {
+                System.out.println("Hủy thao tác.");
             }
+            return;
         }
+
+        int truckIndex = truckManager.searchId(numberPlate);
+        if (truckIndex != -1) {
+            List<Truck> trucks = truckManager.findAll();
+            Truck truck = trucks.get(truckIndex);
+            System.out.print("Tìm thấy xe tải có BKS " + numberPlate + ". Bạn có chắc muốn xóa? (Yes/No): ");
+            String confirm = scanner.nextLine();
+            if (confirm.equalsIgnoreCase("Yes")) {
+                truckManager.deleteById(numberPlate);
+                System.out.println("Đã xóa xe tải thành công!");
+            } else {
+                System.out.println("Hủy thao tác.");
+            }
+            return;
+        }
+
+        int motorIndex = motorbikeManager.searchId(numberPlate);
+        if (motorIndex != -1) {
+            List<Motorbike> motors = motorbikeManager.findAll();
+            Motorbike motor = motors.get(motorIndex);
+            System.out.print("Tìm thấy xe máy có BKS " + numberPlate + ". Bạn có chắc muốn xóa? (Yes/No): ");
+            String confirm = scanner.nextLine();
+            if (confirm.equalsIgnoreCase("Yes")) {
+                motorbikeManager.deleteById(numberPlate);
+                System.out.println("Đã xóa xe máy thành công!");
+            } else {
+                System.out.println("Hủy thao tác.");
+            }
+            return;
+        }
+
         System.out.println("Không tìm thấy phương tiện có biển số: " + numberPlate);
     }
 
-    static void showDisplayMenu() {
+
+    private static void showDisplayMenu() {
         System.out.println("1. Hiển thị xe tải");
         System.out.println("2. Hiển thị ô tô");
         System.out.println("3. Hiển thị xe máy");
@@ -119,26 +148,42 @@ public class MenuManagerVehicleController {
         }
     }
 
-    static void showSearchVehicle() {
+    private static void showSearchVehicle() {
         System.out.print("Nhập biển kiểm soát cần tìm: ");
         String numberPlate = scanner.nextLine();
 
-        IVehicleService<?>[] services = new IVehicleService[]{carManager, truckManager, motorbikeManager};
-
-        for (IVehicleService<?> service : services) {
-            int index = service.searchId(numberPlate);
-            if (index != -1) {
-                List<?> vehicles = service.findAll();
-                Object vehicle = vehicles.get(index);
-                System.out.println("Tìm thấy " + service.getVehicleType() + " có BKS " + numberPlate);
-                System.out.println(vehicle);
-                return;
-            }
+        int carIndex = carManager.searchId(numberPlate);
+        if (carIndex != -1) {
+            List<Car> cars = carManager.findAll();
+            Car car = cars.get(carIndex);
+            System.out.println("Tìm thấy ô tô có BKS " + numberPlate);
+            System.out.println(car);
+            return;
         }
+
+        int truckIndex = truckManager.searchId(numberPlate);
+        if (truckIndex != -1) {
+            List<Truck> trucks = truckManager.findAll();
+            Truck truck = trucks.get(truckIndex);
+            System.out.println("Tìm thấy xe tải có BKS " + numberPlate);
+            System.out.println(truck);
+            return;
+        }
+
+        int motorIndex = motorbikeManager.searchId(numberPlate);
+        if (motorIndex != -1) {
+            List<Motorbike> motors = motorbikeManager.findAll();
+            Motorbike motor = motors.get(motorIndex);
+            System.out.println("Tìm thấy xe máy có BKS " + numberPlate);
+            System.out.println(motor);
+            return;
+        }
+
         System.out.println("Không tìm thấy phương tiện có biển số: " + numberPlate);
     }
 
-    static void showEditVehicle() {
+
+    private static void showEditVehicle() {
         System.out.print("Nhập biển kiểm soát cần sửa: ");
         String numberPlate = scanner.nextLine();
 
@@ -150,29 +195,29 @@ public class MenuManagerVehicleController {
                 String vehicleType = service.getVehicleType();
 
                 if (service instanceof CarService carService) {
-                    List<CarEntity> cars = carService.findAll();
-                    CarEntity oldCar = cars.get(index);
+                    List<Car> cars = carService.findAll();
+                    Car oldCar = cars.get(index);
                     System.out.println("Thông tin cũ: " + oldCar);
 
-                    CarEntity newCarData = CarView.inputDataForCar();
+                    Car newCarData = CarView.inputDataForCar();
                     newCarData.setNumberPlate(oldCar.getNumberPlate());
                     carService.edit(newCarData, index);
 
                 } else if (service instanceof TruckService truckService) {
-                    List<TruckEntity> trucks = truckService.findAll();
-                    TruckEntity oldTruck = trucks.get(index);
+                    List<Truck> trucks = truckService.findAll();
+                    Truck oldTruck = trucks.get(index);
                     System.out.println("Thông tin cũ: " + oldTruck);
 
-                    TruckEntity newTruckData = TruckView.inputDataForTruck();
+                    Truck newTruckData = TruckView.inputDataForTruck();
                     newTruckData.setNumberPlate(oldTruck.getNumberPlate());
                     truckService.edit(newTruckData, index);
 
                 } else if (service instanceof MotorbikeService motorbikeService) {
-                    List<MotorbikeEntity> motors = motorbikeService.findAll();
-                    MotorbikeEntity oldMotor = motors.get(index);
+                    List<Motorbike> motors = motorbikeService.findAll();
+                    Motorbike oldMotor = motors.get(index);
                     System.out.println("Thông tin cũ: " + oldMotor);
 
-                    MotorbikeEntity newMotorData = MotorbikeView.inputDataForMotorbike();
+                    Motorbike newMotorData = MotorbikeView.inputDataForMotorbike();
                     newMotorData.setNumberPlate(oldMotor.getNumberPlate());
                     motorbikeService.edit(newMotorData, index);
                 }
