@@ -8,6 +8,7 @@ import ss8_clean_code.bai_tap_lam_them_car.view.CarView;
 import ss8_clean_code.bai_tap_lam_them_car.view.MotorbikeView;
 import ss8_clean_code.bai_tap_lam_them_car.view.TruckView;
 
+import java.util.List;
 import java.util.Scanner;
 
 public class MenuManagerVehicleController {
@@ -15,9 +16,6 @@ public class MenuManagerVehicleController {
     private static IVehicleService<CarEntity> carManager = new CarService();
     private static IVehicleService<TruckEntity> truckManager = new TruckService();
     private static IVehicleService<MotorbikeEntity> motorbikeManager = new MotorbikeService();
-
-
-    private static CarEntity carEntity = new CarEntity();
 
     public static void showMenu() {
         while (true) {
@@ -33,26 +31,16 @@ public class MenuManagerVehicleController {
             int choice = Integer.parseInt(scanner.nextLine());
 
             switch (choice) {
-                case 1:
-                    showAddMenu();
-                    break;
-                case 2:
-                    showDisplayMenu();
-                    break;
-                case 3:
-                    showDeleteMenu();
-                    break;
-                case 4:
-                    showSearchVehicle();
-                    break;
-                case 5:
-                    showEditVehicle();
-                    break;
-                case 6:
+                case 1 -> showAddMenu();
+                case 2 -> showDisplayMenu();
+                case 3 -> showDeleteMenu();
+                case 4 -> showSearchVehicle();
+                case 5 -> showEditVehicle();
+                case 6 -> {
                     System.out.println("Thoát chương trình...");
                     return;
-                default:
-                    System.out.println("Vui lòng chọn lại!");
+                }
+                default -> System.out.println("Vui lòng chọn lại!");
             }
         }
     }
@@ -65,23 +53,22 @@ public class MenuManagerVehicleController {
         int type = Integer.parseInt(scanner.nextLine());
 
         switch (type) {
-            case 1:
+            case 1 -> {
                 TruckEntity truck = TruckView.inputDataForTruck();
                 truckManager.add(truck);
                 System.out.println("Thêm mới thành công");
-                break;
-            case 2:
+            }
+            case 2 -> {
                 CarEntity car = CarView.inputDataForCar();
                 carManager.add(car);
                 System.out.println("Thêm mới thành công");
-                break;
-            case 3:
+            }
+            case 3 -> {
                 MotorbikeEntity motorbike = MotorbikeView.inputDataForMotorbike();
                 motorbikeManager.add(motorbike);
                 System.out.println("Thêm mới thành công");
-                break;
-            default:
-                System.out.println("Lựa chọn không hợp lệ!");
+            }
+            default -> System.out.println("Lựa chọn không hợp lệ!");
         }
     }
 
@@ -89,13 +76,11 @@ public class MenuManagerVehicleController {
         System.out.print("Nhập biển kiểm soát cần xóa: ");
         String numberPlate = scanner.nextLine();
         IVehicleService<?>[] services = new IVehicleService[]{carManager, truckManager, motorbikeManager};
+
         for (IVehicleService<?> service : services) {
             int index = service.searchId(numberPlate);
             if (index != -1) {
-                String vehicleType = "";
-                if (service instanceof CarService) vehicleType = "ô tô";
-                else if (service instanceof TruckService) vehicleType = "xe tải";
-                else if (service instanceof MotorbikeService) vehicleType = "xe máy";
+                String vehicleType = service.getVehicleType();
 
                 System.out.print("Tìm thấy " + vehicleType + " có BKS " + numberPlate + ". Bạn có chắc muốn xóa? (Yes/No): ");
                 String confirm = scanner.nextLine();
@@ -108,7 +93,6 @@ public class MenuManagerVehicleController {
                 return;
             }
         }
-
         System.out.println("Không tìm thấy phương tiện có biển số: " + numberPlate);
     }
 
@@ -120,22 +104,18 @@ public class MenuManagerVehicleController {
         int type = Integer.parseInt(scanner.nextLine());
 
         switch (type) {
-            case 1:
-                System.out.println("Danh sách");
-                TruckEntity[] truckEntities = truckManager.findAll();
-                TruckView.showList(truckEntities);
-                break;
-            case 2:
-                System.out.println("Danh sách");
-                CarEntity[] carEntities = carManager.findAll();
-                CarView.showList(carEntities);
-                break;
-            case 3:
-                System.out.println("Danh sách");
-                MotorbikeEntity[] motorbikeEntities = motorbikeManager.findAll();
-                MotorbikeView.showList(motorbikeEntities);
-                break;
-
+            case 1 -> {
+                System.out.println("Danh sách xe tải");
+                TruckView.showList(truckManager.findAll());
+            }
+            case 2 -> {
+                System.out.println("Danh sách ô tô");
+                CarView.showList(carManager.findAll());
+            }
+            case 3 -> {
+                System.out.println("Danh sách xe máy");
+                MotorbikeView.showList(motorbikeManager.findAll());
+            }
         }
     }
 
@@ -148,15 +128,13 @@ public class MenuManagerVehicleController {
         for (IVehicleService<?> service : services) {
             int index = service.searchId(numberPlate);
             if (index != -1) {
-                Object[] vehicles = service.findAll();
-                Object vehicle = vehicles[index];
+                List<?> vehicles = service.findAll();
+                Object vehicle = vehicles.get(index);
                 System.out.println("Tìm thấy " + service.getVehicleType() + " có BKS " + numberPlate);
-                System.out.println(vehicle.toString());
+                System.out.println(vehicle);
                 return;
             }
-
         }
-
         System.out.println("Không tìm thấy phương tiện có biển số: " + numberPlate);
     }
 
@@ -169,44 +147,40 @@ public class MenuManagerVehicleController {
         for (IVehicleService<?> service : services) {
             int index = service.searchId(numberPlate);
             if (index != -1) {
-                String vehicleType = "";
-                if (service instanceof CarService) {
-                    vehicleType = "ô tô";
-                    CarEntity[] cars = ((CarService) service).findAll();
-                    CarEntity oldCar = cars[index];
+                String vehicleType = service.getVehicleType();
+
+                if (service instanceof CarService carService) {
+                    List<CarEntity> cars = carService.findAll();
+                    CarEntity oldCar = cars.get(index);
                     System.out.println("Thông tin cũ: " + oldCar);
 
                     CarEntity newCarData = CarView.inputDataForCar();
-                    newCarData.setNumberPlate(oldCar.getNumberPlate()); // giữ nguyên biển số
-                    ((CarService) service).edit(newCarData, index);
+                    newCarData.setNumberPlate(oldCar.getNumberPlate());
+                    carService.edit(newCarData, index);
 
-                } else if (service instanceof TruckService) {
-                    vehicleType = "xe tải";
-                    TruckEntity[] trucks = ((TruckService) service).findAll();
-                    TruckEntity oldTruck = trucks[index];
+                } else if (service instanceof TruckService truckService) {
+                    List<TruckEntity> trucks = truckService.findAll();
+                    TruckEntity oldTruck = trucks.get(index);
                     System.out.println("Thông tin cũ: " + oldTruck);
 
                     TruckEntity newTruckData = TruckView.inputDataForTruck();
                     newTruckData.setNumberPlate(oldTruck.getNumberPlate());
-                    ((TruckService) service).edit(newTruckData, index);
+                    truckService.edit(newTruckData, index);
 
-                } else if (service instanceof MotorbikeService) {
-                    vehicleType = "xe máy";
-                    MotorbikeEntity[] motors = ((MotorbikeService) service).findAll();
-                    MotorbikeEntity oldMotor = motors[index];
+                } else if (service instanceof MotorbikeService motorbikeService) {
+                    List<MotorbikeEntity> motors = motorbikeService.findAll();
+                    MotorbikeEntity oldMotor = motors.get(index);
                     System.out.println("Thông tin cũ: " + oldMotor);
 
                     MotorbikeEntity newMotorData = MotorbikeView.inputDataForMotorbike();
                     newMotorData.setNumberPlate(oldMotor.getNumberPlate());
-                    ((MotorbikeService) service).edit(newMotorData, index);
+                    motorbikeService.edit(newMotorData, index);
                 }
 
                 System.out.println("Đã cập nhật thông tin " + vehicleType + " thành công!");
                 return;
             }
         }
-
         System.out.println("Không tìm thấy phương tiện có biển số: " + numberPlate);
     }
 }
-

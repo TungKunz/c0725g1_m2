@@ -1,15 +1,16 @@
 package ss8_clean_code.bai_tap_lam_them_car.service;
 
-import ss8_clean_code.bai_tap_lam_them_car.entity.MotorbikeEntity;
 import ss8_clean_code.bai_tap_lam_them_car.entity.TruckEntity;
-import ss8_clean_code.bai_tap_lam_them_car.repository.ITruckRepository;
 import ss8_clean_code.bai_tap_lam_them_car.repository.IVehicleRepository;
 import ss8_clean_code.bai_tap_lam_them_car.repository.TruckRepository;
 
+import java.util.List;
+
 public class TruckService implements IVehicleService<TruckEntity> {
     private IVehicleRepository<TruckEntity> truckRepository = new TruckRepository();
+
     @Override
-    public TruckEntity[]  findAll(){
+    public List<TruckEntity> findAll() {
         return truckRepository.findAll();
     }
 
@@ -28,14 +29,13 @@ public class TruckService implements IVehicleService<TruckEntity> {
         truckRepository.add(truck);
     }
 
-    // chức năng
     @Override
     public boolean deleteById(String numberPlate) {
         return truckRepository.deleteById(numberPlate);
     }
+
     @Override
     public String getVehicleType() {
         return "xe tải";
     }
-
 }

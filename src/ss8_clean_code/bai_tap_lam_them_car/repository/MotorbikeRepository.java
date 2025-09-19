@@ -1,61 +1,41 @@
 package ss8_clean_code.bai_tap_lam_them_car.repository;
 
-import ss8_clean_code.bai_tap_lam_them_car.entity.CarEntity;
 import ss8_clean_code.bai_tap_lam_them_car.entity.MotorbikeEntity;
+import java.util.ArrayList;
+import java.util.List;
 
-public class MotorbikeRepository implements IVehicleRepository <MotorbikeEntity>{
-    public static MotorbikeEntity[] motorbikeEntities=new MotorbikeEntity[100];
+public class MotorbikeRepository implements IVehicleRepository<MotorbikeEntity> {
+    private static List<MotorbikeEntity> motorbikeEntities = new ArrayList<>();
+
     @Override
-    public MotorbikeEntity[] findAll() {
-        return motorbikeEntities;
+    public List<MotorbikeEntity> findAll() {
+        return new ArrayList<>(motorbikeEntities);
     }
 
     @Override
     public int searchId(String numberPlate) {
-        int index = -1;
-        for (int i = 0; i < motorbikeEntities.length; i++) {
-            if (motorbikeEntities[i] != null && motorbikeEntities[i].getNumberPlate().equals(numberPlate)) {
-                index = i;
-                break;
+        for (int i = 0; i < motorbikeEntities.size(); i++) {
+            if (motorbikeEntities.get(i).getNumberPlate().equals(numberPlate)) {
+                return i;
             }
         }
-        return index;
+        return -1;
     }
 
     @Override
     public void edit(MotorbikeEntity vehicle, int index) {
-        if (index >= 0 && index < motorbikeEntities.length && motorbikeEntities[index] != null) {
-            motorbikeEntities[index] = vehicle;
-     }
+        if (index >= 0 && index < motorbikeEntities.size()) {
+            motorbikeEntities.set(index, vehicle);
+        }
     }
 
-
-
-
     @Override
-    public void add (MotorbikeEntity motorbike){
-        // ghi file
-        for (int i = 0; i <motorbikeEntities.length ; i++) {
-            if (motorbikeEntities[i]==null){
-                motorbikeEntities[i]= motorbike;
-                break;
-            }
-        }
+    public void add(MotorbikeEntity motorbike) {
+        motorbikeEntities.add(motorbike);
     }
 
     @Override
     public boolean deleteById(String numberPlate) {
-        boolean check = false;
-        for (int i = 0; i < motorbikeEntities.length; i++) {
-            if (motorbikeEntities[i] != null && motorbikeEntities[i].getNumberPlate().equals(numberPlate)) {
-                for (int j = i; j < motorbikeEntities.length - 1; j++) {
-                    motorbikeEntities[j] = motorbikeEntities[j + 1];
-                }
-                motorbikeEntities[motorbikeEntities.length - 1] = null;
-                check = true;
-                break;
-            }
-        }
-        return check;
+        return motorbikeEntities.removeIf(m -> m.getNumberPlate().equals(numberPlate));
     }
 }

@@ -1,60 +1,41 @@
 package ss8_clean_code.bai_tap_lam_them_car.repository;
 
 import ss8_clean_code.bai_tap_lam_them_car.entity.CarEntity;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CarRepository implements IVehicleRepository<CarEntity> {
-    private static  CarEntity[] carEntities = new CarEntity[100];
+    private static List<CarEntity> carEntities = new ArrayList<>();
+
     @Override
-    public CarEntity[] findAll(){
-        // dọc file
-        return carEntities;
+    public List<CarEntity> findAll() {
+        return new ArrayList<>(carEntities); // trả bản copy tránh lỗi ngoài ý muốn
     }
 
     @Override
-    public void add (CarEntity car){
-        // ghi file
-        for (int i = 0; i <carEntities.length ; i++) {
-            if (carEntities[i]==null){
-                carEntities[i]= car;
-                break;
-            }
-        }
+    public void add(CarEntity car) {
+        carEntities.add(car);
     }
 
     @Override
     public boolean deleteById(String numberPlate) {
-        boolean check = false;
-        for (int i = 0; i < carEntities.length; i++) {
-            if (carEntities[i] != null && carEntities[i].getNumberPlate().equals(numberPlate)) {
-                for (int j = i; j < carEntities.length - 1; j++) {
-                    carEntities[j] = carEntities[j + 1];
-                }
-                carEntities[carEntities.length - 1] = null;
-                check = true;
-                break;
-            }
-        }
-        return check;
+        return carEntities.removeIf(c -> c.getNumberPlate().equals(numberPlate));
     }
 
     @Override
     public int searchId(String numberPlate) {
-        int index = -1;
-        for (int i = 0; i < carEntities.length; i++) {
-            if (carEntities[i] != null && carEntities[i].getNumberPlate().equals(numberPlate)) {
-                index = i;
-                break;
+        for (int i = 0; i < carEntities.size(); i++) {
+            if (carEntities.get(i).getNumberPlate().equals(numberPlate)) {
+                return i;
             }
         }
-        return index;
+        return -1;
     }
 
     @Override
     public void edit(CarEntity vehicle, int index) {
-        if (index >= 0 && index < carEntities.length && carEntities[index] != null) {
-            carEntities[index] = vehicle;
+        if (index >= 0 && index < carEntities.size()) {
+            carEntities.set(index, vehicle);
         }
     }
-
-
 }
