@@ -1,4 +1,4 @@
-package ss12_map_tree.bai_tap.tree;
+package ss12_map_tree.thuc_hanh.tree;
 
 public class BST<E extends Comparable<E>> extends AbstractTree<E> {
     protected TreeNode<E> root;

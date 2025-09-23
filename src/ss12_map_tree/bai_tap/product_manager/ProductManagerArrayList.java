@@ -1,10 +1,8 @@
 package ss12_map_tree.bai_tap.product_manager;
 
-import Furama.entity.person.Employee;
-
 import java.util.*;
 
-public class ProductManager {
+public class ProductManagerArrayList {
     private static final List<Product> productList = new ArrayList<>();
     private static final Scanner scanner = new Scanner(System.in);
 
@@ -18,11 +16,11 @@ public class ProductManager {
                     ==========Menu==========
                     1. Thêm sản phẩm
                     2. Sửa thông tin sản phẩm theo id
-                    3. Xóa sản phẩm theo id 
+                    3. Xóa sản phẩm theo id\s
                     4. Hiển thị danh sách sản phẩm
                     5. Tìm kiếm sản phẩm theo tên
                     6. Sắp xếp sản phẩm tăng dần, giảm dần theo giá
-                    """);
+                   \s""");
             byte choice = Byte.parseByte(scanner.nextLine());
             switch (choice) {
                 case 1 -> {
@@ -100,8 +98,7 @@ public class ProductManager {
         System.out.print("Nhập giá sản phẩm: ");
         double price = Double.parseDouble(scanner.nextLine());
 
-        Product product = new Product(id, name, price);
-        return product;
+        return new Product(id, name, price);
 
 
     }
@@ -115,18 +112,21 @@ public class ProductManager {
             }
         }
     }
-    public static void editProductById(){
-        System.out.println("Nhập id mà bạn muốn sửa");
-        int idEdit= Integer.parseInt(scanner.nextLine());
-        int index=searchId(idEdit);
-        if (index >= 0) {
-            Product editProduct = addNewProduct();
-            productList.set(index, editProduct);
-            editProduct.setId(idEdit);
-        }else {
-            System.out.println("Mã id không tồn tại hoặc không đúng, mời nhập lại");
-        }
+    public static void editProductById() {
+        System.out.print("Nhập id sản phẩm cần sửa: ");
+        int id = Integer.parseInt(scanner.nextLine());
 
+        for (Product p : productList) {
+            if (p.getId() == id) {
+                System.out.print("Nhập tên mới: ");
+                p.setName(scanner.nextLine());
+                System.out.print("Nhập giá mới: ");
+                p.setPrice(Double.parseDouble(scanner.nextLine()));
+                System.out.println("Cập nhật thành công!");
+                return;
+            }
+        }
+        System.out.println("Không tìm thấy sản phẩm với id: " + id);
     }
 
     public static int searchId(int id) {
