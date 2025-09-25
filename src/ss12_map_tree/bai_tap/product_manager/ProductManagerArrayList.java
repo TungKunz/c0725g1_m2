@@ -1,12 +1,15 @@
 package ss12_map_tree.bai_tap.product_manager;
 
+import java.io.*;
 import java.util.*;
 
 public class ProductManagerArrayList {
     private static final List<Product> productList = new ArrayList<>();
     private static final Scanner scanner = new Scanner(System.in);
+    private static final String FILE_PATH = "D:\\CodeGym\\Module2\\src\\ss12_map_tree\\bai_tap\\product_manager\\products.csv";
 
     public static void main(String[] args) {
+        productList.addAll(readProductsFromCSV());
         showMenu();
     }
 
@@ -19,7 +22,9 @@ public class ProductManagerArrayList {
                     3. Xóa sản phẩm theo id\s
                     4. Hiển thị danh sách sản phẩm
                     5. Tìm kiếm sản phẩm theo tên
-                    6. Sắp xếp sản phẩm tăng dần, giảm dần theo giá
+                    6. Lưu sản phẩm ra file CSV
+                    7. Đọc sản phẩm từ file CSV
+                    8. Sắp xếp sản phẩm tăng dần, giảm dần theo giá
                    \s""");
             byte choice = Byte.parseByte(scanner.nextLine());
             switch (choice) {
@@ -38,20 +43,27 @@ public class ProductManagerArrayList {
                 }
                 case 4 -> {
                     System.out.println("Hiển thị danh sách sản phẩm");
-                    showAllProducts();
+                    showAllProducts(productList);
                 }
                 case 5 -> {
                     System.out.println("Tìm kiếm sản phẩm theo tên");
                     System.out.println("Nhập tên bạn muốn tìm kiếm");
                     String name= scanner.nextLine();
-                    int index = searchName(name);
-                    if(index>=0){
-                        System.out.println(productList.get(index));
+                    List<Product> products;
+                    products=searchName(name);
+                    if(!products.isEmpty()){
+                        showAllProducts(products);
                     }else {
                         System.out.println("Không tìm thấy");
                     }
                 }
-                case 6 -> {
+                case 6 -> writeProductsToCSV();
+                case 7 -> {
+                    productList.clear();
+                    productList.addAll(readProductsFromCSV());
+                    System.out.println("Đã nạp dữ liệu từ file CSV.");
+                }
+                case 8 -> {
                     System.out.println("""
             Sắp xếp sản phẩm theo giá
             1. Tăng dần
@@ -62,7 +74,7 @@ public class ProductManagerArrayList {
                         case 1 -> {
                             productList.sort(null);
                             System.out.println("Sắp xếp sản phẩm theo giá (giảm dần)");
-                            showAllProducts();
+                            showAllProducts(productList);
                         }
                         case 2 -> {
                             productList.sort(null);
@@ -79,7 +91,7 @@ public class ProductManagerArrayList {
                     }
                 }
 
-                case 7 -> {
+                case 9 -> {
                     System.out.println("Thoát chương trình...");
                     return;
                 }
@@ -89,25 +101,42 @@ public class ProductManagerArrayList {
     }
 
     public static Product addNewProduct() {
-        System.out.print("Nhập id sản phẩm: ");
-        int id = Integer.parseInt(scanner.nextLine());
+        int id;
+        double price;
+        while (true) {
+            try {
+                System.out.print("Nhập id sản phẩm: ");
+                id = Integer.parseInt(scanner.nextLine());
 
+                if (searchId(id) != -1) {
+                    System.out.println("Id đã tồn tại, mời bạn nhập lại!");
+                    continue;
+                }
+                break;
+
+            } catch (NumberFormatException e) {
+                System.out.println("Vui lòng nhập số hợp lệ!");
+            }
+        }
         System.out.print("Nhập tên sản phẩm: ");
         String name = scanner.nextLine();
-
-        System.out.print("Nhập giá sản phẩm: ");
-        double price = Double.parseDouble(scanner.nextLine());
-
+        while (true){
+            try {
+                System.out.print("Nhập giá sản phẩm: ");
+                price = Double.parseDouble(scanner.nextLine());
+                break;
+            }catch (NumberFormatException e){
+                System.out.println("Nhập đúng định dạng ");
+            }
+        }
         return new Product(id, name, price);
-
-
     }
 
-    public static void showAllProducts() {
-        if (productList.isEmpty()) {
+    public static void showAllProducts(List<Product> products) {
+        if (products.isEmpty()) {
             System.out.println("Danh sách sản phẩm trống!");
         } else {
-            for (Product p : productList) {
+            for (Product p : products) {
                 System.out.println(p);
             }
         }
@@ -120,8 +149,15 @@ public class ProductManagerArrayList {
             if (p.getId() == id) {
                 System.out.print("Nhập tên mới: ");
                 p.setName(scanner.nextLine());
-                System.out.print("Nhập giá mới: ");
-                p.setPrice(Double.parseDouble(scanner.nextLine()));
+                while (true){
+                    try{
+                        System.out.print("Nhập giá mới: ");
+                        p.setPrice(Double.parseDouble(scanner.nextLine()));
+                        break;
+                    }catch (NumberFormatException e){
+                        System.out.println(e.getMessage());
+                    }
+                }
                 System.out.println("Cập nhật thành công!");
                 return;
             }
@@ -137,13 +173,14 @@ public class ProductManagerArrayList {
         }
         return -1;
     }
-    public static int searchName(String name) {
-        for (int i = 0; i < productList.size(); i++) {
-            if (productList.get(i).getName().equals(name)) {
-                return i;
+    public static List<Product> searchName(String name) {
+        List<Product> productsListSearch = new ArrayList<>();
+        for (Product product : productList) {
+            if (product.getName().equals(name)) {
+                productsListSearch.add(product);
             }
         }
-        return -1;
+        return productsListSearch;
     }
     public static void deleteProductById(){
         System.out.println("Nhập id bạn muốn xóa");
@@ -155,5 +192,35 @@ public class ProductManagerArrayList {
         }else {
             System.out.println("Không tìm thấy id");
         }
+    }
+    private static void writeProductsToCSV() {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(FILE_PATH))) {
+            for (Product p : productList) {
+                writer.write(p.getId() + "," + p.getName() + "," + p.getPrice());
+                writer.newLine();
+            }
+            System.out.println("Đã lưu danh sách sản phẩm ra file " + FILE_PATH);
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    private static List<Product> readProductsFromCSV() {
+        List<Product> list = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split(",");
+                int id = Integer.parseInt(parts[0]);
+                String name = parts[1];
+                double price = Double.parseDouble(parts[2]);
+                list.add(new Product(id, name, price));
+            }
+        } catch (FileNotFoundException e) {
+            System.out.println("Chưa có file dữ liệu, bắt đầu với danh sách rỗng.");
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+        }
+        return list;
     }
 }

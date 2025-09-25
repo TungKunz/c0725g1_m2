@@ -79,6 +79,8 @@ public class FuramaController {
                 if (index != -1) {
                     Employee newEmployee = EmployeeView.inputDataForEmployee();
                     employeeManager.edit(newEmployee, index);
+
+                    System.out.println("Thông tin nhân viên đã được thay đổi!!!");
                 } else {
                     System.out.println("Không tìm thấy mã khách hàng mà bạn muốn sửa");
                 }
@@ -119,6 +121,8 @@ public class FuramaController {
                 if (index != -1) {
                     Customer newCustomer = CustomerView.inputDataForCustormer();
                     customerManager.edit(newCustomer, index);
+                    newCustomer.setIdPerson(idCustomer);
+                    System.out.println("Thông tin khách hàng đã được thay đổi!!!");
                 } else {
                     System.out.println("Không tìm thấy mã khách hàng mà bạn muốn sửa");
                 }

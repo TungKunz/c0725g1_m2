@@ -187,45 +187,47 @@ public class MenuVehicleController {
         System.out.print("Nhập biển kiểm soát cần sửa: ");
         String numberPlate = scanner.nextLine();
 
-        IVehicleService<?>[] services = new IVehicleService[]{carManager, truckManager, motorbikeManager};
-
-        for (IVehicleService<?> service : services) {
-            int index = service.searchId(numberPlate);
-            if (index != -1) {
-                String vehicleType = service.getVehicleType();
-
-                if (service instanceof CarService carService) {
-                    List<Car> cars = carService.findAll();
-                    Car oldCar = cars.get(index);
-                    System.out.println("Thông tin cũ: " + oldCar);
-
-                    Car newCarData = CarView.inputDataForCar();
-                    newCarData.setNumberPlate(oldCar.getNumberPlate());
-                    carService.edit(newCarData, index);
-
-                } else if (service instanceof TruckService truckService) {
-                    List<Truck> trucks = truckService.findAll();
-                    Truck oldTruck = trucks.get(index);
-                    System.out.println("Thông tin cũ: " + oldTruck);
-
-                    Truck newTruckData = TruckView.inputDataForTruck();
-                    newTruckData.setNumberPlate(oldTruck.getNumberPlate());
-                    truckService.edit(newTruckData, index);
-
-                } else if (service instanceof MotorbikeService motorbikeService) {
-                    List<Motorbike> motors = motorbikeService.findAll();
-                    Motorbike oldMotor = motors.get(index);
-                    System.out.println("Thông tin cũ: " + oldMotor);
-
-                    Motorbike newMotorData = MotorbikeView.inputDataForMotorbike();
-                    newMotorData.setNumberPlate(oldMotor.getNumberPlate());
-                    motorbikeService.edit(newMotorData, index);
-                }
-
-                System.out.println("Đã cập nhật thông tin " + vehicleType + " thành công!");
-                return;
-            }
+        int carIndex = carManager.searchId(numberPlate);
+        if (carIndex != -1) {
+            List<Car> cars = carManager.findAll();
+            Car oldCar = cars.get(carIndex);
+            System.out.println("Thông tin cũ: " + oldCar);
+            Car newCarData = CarView.inputDataForCar();
+            newCarData.setNumberPlate(oldCar.getNumberPlate());
+            carManager.edit(newCarData, carIndex);
+            System.out.println("Đã cập nhật thông tin ô tô thành công!");
+            return;
         }
+
+        int truckIndex = truckManager.searchId(numberPlate);
+        if (truckIndex != -1) {
+            List<Truck> trucks = truckManager.findAll();
+            Truck oldTruck = trucks.get(truckIndex);
+            System.out.println("Thông tin cũ: " + oldTruck);
+
+            Truck newTruckData = TruckView.inputDataForTruck();
+            newTruckData.setNumberPlate(oldTruck.getNumberPlate());
+            truckManager.edit(newTruckData, truckIndex);
+
+            System.out.println("Đã cập nhật thông tin xe tải thành công!");
+            return;
+        }
+
+        int motorIndex = motorbikeManager.searchId(numberPlate);
+        if (motorIndex != -1) {
+            List<Motorbike> motors = motorbikeManager.findAll();
+            Motorbike oldMotor = motors.get(motorIndex);
+            System.out.println("Thông tin cũ: " + oldMotor);
+
+            Motorbike newMotorData = MotorbikeView.inputDataForMotorbike();
+            newMotorData.setNumberPlate(oldMotor.getNumberPlate());
+            motorbikeManager.edit(newMotorData, motorIndex);
+
+            System.out.println("Đã cập nhật thông tin xe máy thành công!");
+            return;
+        }
+
         System.out.println("Không tìm thấy phương tiện có biển số: " + numberPlate);
     }
+
 }

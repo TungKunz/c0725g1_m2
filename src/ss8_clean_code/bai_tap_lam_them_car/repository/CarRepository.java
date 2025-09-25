@@ -14,7 +14,6 @@ public class CarRepository implements IVehicleRepository<Car> {
 
     @Override
     public void add(Car car) {
-
         carEntities.add(car);
     }
 

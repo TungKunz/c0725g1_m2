@@ -145,7 +145,6 @@ public class EmployeeView {
             }
         }
         Employee emp = new Employee(idEmployee, name, birthDate,genderPerson,cMND,phone,emailPerson,educationLevel,position, salary);
-        System.out.println("\nNhân viên mới đã được tạo:");
         return emp;
 
     }
