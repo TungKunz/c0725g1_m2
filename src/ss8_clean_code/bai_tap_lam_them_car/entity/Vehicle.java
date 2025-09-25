@@ -62,5 +62,5 @@ public abstract class Vehicle {
         return String.format("%-12s | %-15s | %-10d | %-15s",
                 numberPlate, manufacturerName, manufactureYear, owner);
     }
-
+    public abstract String getInforToCSV();
 }

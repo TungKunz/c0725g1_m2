@@ -6,7 +6,7 @@ import ss8_clean_code.bai_tap_lam_them_car.repository.TruckRepository;
 
 import java.util.List;
 
-public class TruckService implements IVehicleService<Truck> {
+public class TruckService implements ITruckService {
     private IVehicleRepository<Truck> truckRepository = new TruckRepository();
 
     @Override
@@ -15,27 +15,30 @@ public class TruckService implements IVehicleService<Truck> {
     }
 
     @Override
-    public int searchId(String numberPlate) {
-        return truckRepository.searchId(numberPlate);
-    }
-
-    @Override
-    public void edit(Truck newTruckData, int index) {
-        truckRepository.edit(newTruckData, index);
-    }
-
-    @Override
-    public void add(Truck truck) {
-        truckRepository.add(truck);
+    public boolean add(Truck truck) {
+//        List<Student> studentList = studentRepository.findAll();
+//        if (studentList.isEmpty()){
+//            student.setId(1);
+//        }else {
+//            Student endStudent = studentList.get(studentList.size()-1);
+//            student.setId(endStudent.getId()+1);
+//        }
+//
+//        studentRepository.add(student);
+        return truckRepository.add(truck);
     }
 
     @Override
     public boolean deleteById(String numberPlate) {
+        Truck truck = truckRepository.findById(numberPlate);
+        if(truck == null){
+            return false;
+        }
         return truckRepository.deleteById(numberPlate);
     }
 
     @Override
-    public String getVehicleType() {
-        return "xe tải";
+    public Truck findById(String numberPlate) {
+        return truckRepository.findById(numberPlate);
     }
 }

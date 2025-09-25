@@ -33,4 +33,9 @@ public class Car extends Vehicle {
                 numberOfSeats, carType);
     }
 
+    @Override
+    public String getInforToCSV() {
+        return this.getNumberPlate() +","+this.getManufacturerName()+","+this.getManufactureYear()+","+this.getOwner()+","+this.getNumberOfSeats()+","+this.getCarType();
+    }
+
 }

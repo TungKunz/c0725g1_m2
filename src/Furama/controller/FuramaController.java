@@ -12,9 +12,9 @@ import java.util.Scanner;
 import java.util.regex.Pattern;
 
 public class FuramaController {
-    private static Scanner scanner = new Scanner(System.in);
-    private static IService<Employee> employeeManager = new EmployeeService();
-    private static IService<Customer> customerManager= new CustomerService();
+    private static final  Scanner scanner = new Scanner(System.in);
+    private static final IService<Employee> employeeManager = new EmployeeService();
+    private static final IService<Customer> customerManager= new CustomerService();
     public static void displayMainMenu() {
         while (true) {
             System.out.println("==== CHƯƠNG TRÌNH QUẢN LÝ FURAMA ====");
@@ -35,9 +35,9 @@ public class FuramaController {
             switch (choice) {
                 case 1 -> employeeManagement();
                 case 2 -> customerManagement();
-                case 3 -> facilityManagement();
-                case 4 -> bookingManagement();
-                case 5 -> promotionManagement();
+//                case 3 -> facilityManagement();
+//                case 4 -> bookingManagement();
+//                case 5 -> promotionManagement();
                 case 6 -> {
                     System.out.println("Thoát chương trình...");
                     return;
@@ -130,33 +130,33 @@ public class FuramaController {
             }
         }
     }
-
-    public static void facilityManagement() {
-        System.out.println("1. Display list  facility");
-        System.out.println("2. Add new  facility");
-        System.out.println("3. Edit  facility");
-        System.out.println("4. Return main menu");
-        System.out.print("Select an option facility: ");
-        int type = Integer.parseInt(scanner.nextLine());
-    }
-
-    public static void bookingManagement() {
-        System.out.println("1. Add new booking");
-        System.out.println("2. Display list  booking");
-        System.out.println("3. Create new contracts");
-        System.out.println("4. Display list contracts");
-        System.out.println("5. Edit contracts");
-        System.out.println("6. Return main menu");
-        System.out.print("Select an option booking: ");
-        int type = Integer.parseInt(scanner.nextLine());
-    }
-
-    public static void promotionManagement() {
-        System.out.println("1. Display list customers use service");
-        System.out.println("2. Display list customers get voucher");
-        System.out.println("3. Return main menu");
-        System.out.print("Select an option promotion: ");
-        int type = Integer.parseInt(scanner.nextLine());
-    }
+//
+//    public static void facilityManagement() {
+//        System.out.println("1. Display list  facility");
+//        System.out.println("2. Add new  facility");
+//        System.out.println("3. Edit  facility");
+//        System.out.println("4. Return main menu");
+//        System.out.print("Select an option facility: ");
+//        int type = Integer.parseInt(scanner.nextLine());
+//    }
+//
+//    public static void bookingManagement() {
+//        System.out.println("1. Add new booking");
+//        System.out.println("2. Display list  booking");
+//        System.out.println("3. Create new contracts");
+//        System.out.println("4. Display list contracts");
+//        System.out.println("5. Edit contracts");
+//        System.out.println("6. Return main menu");
+//        System.out.print("Select an option booking: ");
+//        int type = Integer.parseInt(scanner.nextLine());
+//    }
+//
+//    public static void promotionManagement() {
+//        System.out.println("1. Display list customers use service");
+//        System.out.println("2. Display list customers get voucher");
+//        System.out.println("3. Return main menu");
+//        System.out.print("Select an option promotion: ");
+//        int type = Integer.parseInt(scanner.nextLine());
+//    }
 
 }

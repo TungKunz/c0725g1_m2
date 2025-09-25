@@ -1,43 +1,81 @@
 package ss8_clean_code.bai_tap_lam_them_car.repository;
 
 import ss8_clean_code.bai_tap_lam_them_car.entity.Motorbike;
+import ss8_clean_code.bai_tap_lam_them_car.util.ReadAndWriteFile;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MotorbikeRepository implements IVehicleRepository<Motorbike> {
-    private static List<Motorbike> motorbikeEntities = new ArrayList<>();
+public class MotorbikeRepository implements IMotorbikeRepository{
+
+
+    private final String CAR_FILE="src/ss8_clean_code/bai_tap_lam_them_car/data/motorbike_file.csv";
 
     @Override
     public List<Motorbike> findAll() {
 
-        return new ArrayList<>(motorbikeEntities);
-    }
-
-    @Override
-    public int searchId(String numberPlate) {
-        for (int i = 0; i < motorbikeEntities.size(); i++) {
-            if (motorbikeEntities.get(i).getNumberPlate().equals(numberPlate)) {
-                return i;
-            }
+        List<Motorbike> motorbikeList = new ArrayList<>();
+        List<String> stringList = new ArrayList<>();
+        try {
+            stringList = ReadAndWriteFile.readFileCSVToList(CAR_FILE);
+        } catch (IOException e) {
+            System.out.println("lỗi đọc file");
         }
-        return -1;
-    }
-
-    @Override
-    public void edit(Motorbike vehicle, int index) {
-        if (index >= 0 && index < motorbikeEntities.size()) {
-            motorbikeEntities.set(index, vehicle);
+        String[] array;
+        for(String line : stringList){
+            array=line.split(",");
+            String numberPlate = array[0];
+            String manufacturerName = array[1];
+            int manufactureYear = Integer.parseInt(array[2]);
+            String owner = array[3];
+            int power = Integer.parseInt(array[4]);
+            Motorbike motorbike = new Motorbike(numberPlate, manufacturerName, manufactureYear, owner,power);
+            motorbikeList.add(motorbike);
         }
+        return motorbikeList;
     }
 
     @Override
-    public void add(Motorbike motorbike) {
-        motorbikeEntities.add(motorbike);
+    public boolean add(Motorbike motorbike) {
+        List<String> stringList = new ArrayList<>();
+        stringList.add(motorbike.getInforToCSV());
+        try {
+            ReadAndWriteFile.writeListStringToCSV(CAR_FILE,stringList,true);
+        } catch (IOException e) {
+            System.out.println("lỗi ghi file");
+            return false;
+        }
+        return true;
     }
 
     @Override
     public boolean deleteById(String numberPlate) {
-        return motorbikeEntities.removeIf(
-                m -> m.getNumberPlate().equals(numberPlate));
+        List<Motorbike> motorbikeList= findAll();
+        if(findById(numberPlate)!=null){
+            motorbikeList.remove(findById(numberPlate));
+        }
+        List<String> stringList = new ArrayList<>();
+        for (Motorbike motorbike : motorbikeList) {
+            stringList.add(motorbike.getInforToCSV());
+        }
+        try {
+            ReadAndWriteFile.writeListStringToCSV(CAR_FILE,stringList,false);
+        }catch (IOException e){
+            System.out.println("Lỗi ghi file");
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public Motorbike findById(String numberPlate) {
+        List<Motorbike> motorbikeList=findAll();
+        for (Motorbike motorbike: motorbikeList){
+            if(motorbike.getNumberPlate().equals(numberPlate)){
+                return motorbike;
+            }
+        }
+        return null;
     }
 }

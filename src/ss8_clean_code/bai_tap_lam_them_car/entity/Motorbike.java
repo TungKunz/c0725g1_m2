@@ -25,4 +25,9 @@ public class Motorbike extends Vehicle {
                 getNumberPlate(), getManufacturerName(), getManufactureYear(), getOwner(),
                 power);
     }
+
+    @Override
+    public String getInforToCSV() {
+        return this.getNumberPlate() +","+this.getManufacturerName()+","+this.getManufactureYear()+","+this.getOwner()+","+this.getPower();
+    }
 }

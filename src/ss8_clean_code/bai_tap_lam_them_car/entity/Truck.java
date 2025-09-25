@@ -26,4 +26,9 @@ public class Truck extends Vehicle {
                 loadCapacity);
     }
 
+    @Override
+    public String getInforToCSV() {
+        return this.getNumberPlate() +","+this.getManufacturerName()+","+this.getManufactureYear()+","+this.getOwner()+","+this.getLoadCapacity();
+    }
+
 }

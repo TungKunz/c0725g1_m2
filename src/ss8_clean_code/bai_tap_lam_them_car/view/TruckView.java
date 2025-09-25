@@ -50,4 +50,8 @@ public class TruckView {
         System.out.print("Nhập biển kiểm soát: ");
         return scanner.nextLine();
     }
+    public static String inputNumberPlate(){
+        System.out.println("nhập biển số xe");
+        return scanner.nextLine();
+    }
 }
