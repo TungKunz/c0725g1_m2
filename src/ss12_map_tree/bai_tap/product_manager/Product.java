@@ -51,4 +51,7 @@ public class Product implements Comparable<Product> {
     public int compareTo(Product o) {
         return Double.compare(o.getPrice(),this.getPrice());
     }
+    public String getInforToCSV(){
+        return this.getId()+","+this.getName()+","+this.getPrice();
+    }
 }

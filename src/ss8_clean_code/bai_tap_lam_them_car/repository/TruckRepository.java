@@ -50,8 +50,11 @@ public class TruckRepository implements ITruckRepository{
     @Override
     public boolean deleteById(String numberPlate) {
         List<Truck> truckList= findAll();
-        if(findById(numberPlate)!=null){
-            truckList.remove(findById(numberPlate));
+        for (int i = 0; i <truckList.size() ; i++) {
+            if (truckList.get(i).getNumberPlate().equals(numberPlate)){
+                truckList.remove(i);
+                break;
+            }
         }
         List<String> stringList = new ArrayList<>();
         for (Truck truck : truckList) {

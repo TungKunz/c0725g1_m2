@@ -116,7 +116,6 @@ public class CarView {
         int numberOfSeats = Integer.parseInt(scanner.nextLine());
         System.out.print("Nhập kiểu xe: ");
         String carType = scanner.nextLine();
-
         return new Car(numberPlate, manufacturerName, manufactureYear, owner, numberOfSeats, carType);
     }
     public static String inputNumberPlate(){

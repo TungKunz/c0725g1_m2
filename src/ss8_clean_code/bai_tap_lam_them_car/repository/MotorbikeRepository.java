@@ -52,8 +52,11 @@ public class MotorbikeRepository implements IMotorbikeRepository{
     @Override
     public boolean deleteById(String numberPlate) {
         List<Motorbike> motorbikeList= findAll();
-        if(findById(numberPlate)!=null){
-            motorbikeList.remove(findById(numberPlate));
+        for (int i = 0; i <motorbikeList.size() ; i++) {
+            if (motorbikeList.get(i).getNumberPlate().equals(numberPlate)){
+                motorbikeList.remove(i);
+                break;
+            }
         }
         List<String> stringList = new ArrayList<>();
         for (Motorbike motorbike : motorbikeList) {

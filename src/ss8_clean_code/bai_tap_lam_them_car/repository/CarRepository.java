@@ -52,8 +52,11 @@ public class CarRepository implements ICarRepository {
     @Override
     public boolean deleteById(String numberPlate) {
         List<Car> carList= findAll();
-        if(findById(numberPlate)!=null){
-            carList.remove(findById(numberPlate));
+        for (int i = 0; i <carList.size() ; i++) {
+            if (carList.get(i).getNumberPlate().equals(numberPlate)){
+                carList.remove(i);
+                break;
+            }
         }
         List<String> stringList = new ArrayList<>();
         for (Car car : carList) {
