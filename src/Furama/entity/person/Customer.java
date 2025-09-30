@@ -6,7 +6,7 @@ public class Customer extends Person {
     private String customerType;
     private String address;
 
-    Customer() {
+    public Customer() {
     }
 
     public Customer(String customerType, String address) {
@@ -49,5 +49,18 @@ public class Customer extends Person {
                 "customerType='" + customerType + '\'' +
                 ", address='" + address + '\'' +
                 '}';
+    }
+
+    @Override
+    public String getInforToCSV() {
+        return this.getIdPerson() + ","
+                + this.getNamePerson() + ","
+                + this.getDateOfBirthPerson() + ","
+                + this.getGenderPerson() + ","
+                + this.getIdentityNumberPerson() + ","
+                + this.getPhoneNumberPerson() + ","
+                + this.getEmailPerson() + ","
+                + this.getCustomerType() + ","
+                + this.getAddress();
     }
 }

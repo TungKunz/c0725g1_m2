@@ -77,4 +77,5 @@ public abstract class Facility {
                 ", rentalStyleFacility='" + rentalStyleFacility + '\'' +
                 '}';
     }
+    public abstract String getInforToCSV();
 }

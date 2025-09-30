@@ -38,4 +38,9 @@ public class House extends Facility {
                 ", numberOfFloors=" + numberOfFloors +
                 '}';
     }
+
+    @Override
+    public String getInforToCSV() {
+        return this.getIdFacility()+","+this.getNameFacility()+","+this.getAreaFacility()+","+this.getCostFacility()+","+this.getNumberMemberMaxFacility()+","+this.getRentalStyleFacility()+","+this.getRoomStandards()+","+this.getNumberOfFloors();
+    }
 }

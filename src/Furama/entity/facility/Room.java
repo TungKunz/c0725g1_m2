@@ -26,4 +26,15 @@ public class Room extends Facility{
                 "freeService='" + freeService + '\'' +
                 '}';
     }
+
+    @Override
+    public String getInforToCSV() {
+        return this.getIdFacility() + ","
+                + this.getNameFacility() + ","
+                + this.getAreaFacility() + ","
+                + this.getCostFacility() + ","
+                + this.getNumberMemberMaxFacility() + ","
+                + this.getRentalStyleFacility() + ","
+                + this.getFreeService();
+    }
 }

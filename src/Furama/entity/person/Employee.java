@@ -6,6 +6,7 @@ public class Employee extends Person{
     private String educationLevel;
     private String position;
     private int salary;
+    public Employee(){}
     public Employee(String idPerson, String namePerson, LocalDate dateOfBirthPerson, byte genderPerson, String identityNumberPerson, String phoneNumberPerson, String emailPerson, String educationLevel, String position, int salary) {
         super(idPerson, namePerson, dateOfBirthPerson, genderPerson, identityNumberPerson, phoneNumberPerson, emailPerson);
         this.educationLevel = educationLevel;
@@ -17,7 +18,7 @@ public class Employee extends Person{
         return educationLevel;
     }
 
-    private void setEducationLevel(String educationLevel) {
+    public void setEducationLevel(String educationLevel) {
         this.educationLevel = educationLevel;
     }
 
@@ -25,7 +26,7 @@ public class Employee extends Person{
         return position;
     }
 
-    private void setPosition(String position) {
+    public void setPosition(String position) {
         this.position = position;
     }
 
@@ -33,7 +34,7 @@ public class Employee extends Person{
         return salary;
     }
 
-    private void setSalary(int salary) {
+    public void setSalary(int salary) {
         this.salary = salary;
     }
 
@@ -51,5 +52,19 @@ public class Employee extends Person{
                 ", position='" + position + '\'' +
                 ", salary=" + salary +
                 '}';
+    }
+
+    @Override
+    public String getInforToCSV() {
+        return this.getIdPerson() + ","
+                + this.getNamePerson() + ","
+                + this.getDateOfBirthPerson() + ","
+                + this.getGenderPerson() + ","
+                + this.getIdentityNumberPerson() + ","
+                + this.getPhoneNumberPerson() + ","
+                + this.getEmailPerson() + ","
+                + this.getEducationLevel() + ","
+                + this.getPosition() + ","
+                + this.getSalary();
     }
 }

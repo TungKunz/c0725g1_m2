@@ -89,4 +89,5 @@ public abstract class Person {
                 ", emailPerson='" + emailPerson + '\'' +
                 '}';
     }
+    public abstract String getInforToCSV();
 }

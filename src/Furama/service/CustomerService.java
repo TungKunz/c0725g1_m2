@@ -7,25 +7,38 @@ import Furama.repository.IRepository;
 import java.util.List;
 
 public class CustomerService implements IService<Customer>{
-    private IRepository<Customer> customerIRepository = new CustomerRepository();
+    private final IRepository<Customer> customerRepository = new CustomerRepository();
 
     @Override
-    public void add(Customer customer) {
-        customerIRepository.add(customer);
+    public List<Customer> findAll() {
+        return customerRepository.findAll();
     }
 
     @Override
-    public List<Customer> getList() {
-        return customerIRepository.getList();
+    public boolean add(Customer customer) {
+        return customerRepository.add(customer);
     }
 
     @Override
-    public void edit(Customer customer, int index) {
-        customerIRepository.edit(customer,index);
+    public boolean deleteById(Customer customer) {
+        Customer checkCustomer = customerRepository.findById(customer.getIdPerson());
+        if(checkCustomer == null){
+            return false;
+        }
+        return customerRepository.deleteById(customer);
     }
 
     @Override
-    public int searchId(String numberPlate) {
-        return customerIRepository.searchId(numberPlate);
+    public boolean editById(Customer customer) {
+        Customer checkCustomer= customerRepository.findById(customer.getIdPerson());
+        if(checkCustomer!= null){
+            return false;
+        }
+        return customerRepository.editById(customer);
+    }
+
+    @Override
+    public Customer findById(String idPerson) {
+        return customerRepository.findById(idPerson);
     }
 }

@@ -3,8 +3,9 @@ package Furama.repository;
 import java.util.List;
 
 public interface IRepository<T> {
-    void add(T t);
-    List<T> getList();
-    void edit(T t, int index);
-    int searchId(String numberPlate);
+    List<T> findAll();
+    boolean add (T t);
+    boolean deleteById(T t);
+    boolean editById(T t);
+    T findById(String idPerson);
 }

@@ -8,13 +8,15 @@ import Furama.service.IService;
 import Furama.view.person.CustomerView;
 import Furama.view.person.EmployeeView;
 
+
 import java.util.Scanner;
 import java.util.regex.Pattern;
 
 public class FuramaController {
-    private static final  Scanner scanner = new Scanner(System.in);
-    private static final IService<Employee> employeeManager = new EmployeeService();
-    private static final IService<Customer> customerManager= new CustomerService();
+    private static final Scanner scanner = new Scanner(System.in);
+    private static final IService<Employee> employeeService = new EmployeeService();
+    private static final IService<Customer> customerService = new CustomerService();
+
     public static void displayMainMenu() {
         while (true) {
             System.out.println("==== CHƯƠNG TRÌNH QUẢN LÝ FURAMA ====");
@@ -48,85 +50,149 @@ public class FuramaController {
     }
 
     public static void employeeManagement() {
-        System.out.println("1. Display list employees");
-        System.out.println("2. Add new employee");
-        System.out.println("3. Edit employee");
-        System.out.println("4. Return main menu");
-        System.out.print("Select an option employees : ");
-        int type = Integer.parseInt(scanner.nextLine());
-        switch (type){
-            case 1 -> {
-                System.out.println("Danh sách nhân viên");
-                EmployeeView.showList(employeeManager.getList());
-            }
-            case 2 -> {
-                Employee employee = EmployeeView.inputDataForEmployee();
-                employeeManager.add(employee);
-                System.out.println("Thêm mới thành công");
-            }
-            case 3 -> {
-                String idEmployee;
-                while (true){
-                    System.out.println("Nhập mã nhân viên bạn muốn sửa có định dạng: NV-YYYY");
-                    idEmployee= scanner.nextLine();
-                    if (Pattern.matches("KH-\\d{4}", idEmployee)) {
-                        break;
+        boolean flag= true;
+        while (flag){
+            System.out.println("1. Display list employees");
+            System.out.println("2. Add new employee");
+            System.out.println("3. Edit employee");
+            System.out.println("4. Delete employee");
+            System.out.println("5. Return main menu");
+            System.out.print("Select an option employees : ");
+            int type = Integer.parseInt(scanner.nextLine());
+            switch (type) {
+                case 1 -> {
+                    System.out.println("Danh sách nhân viên");
+                    EmployeeView.showList(employeeService.findAll());
+                }
+                case 2 -> {
+                    Employee employee = new Employee();
+                    EmployeeView.inputDataForEmployee("add", employee);
+                    employeeService.add(employee);
+                    System.out.println("Thêm mới thành công");
+                }
+                case 3 -> {
+                    String idEmployee;
+                    while (true) {
+                        System.out.println("Nhập mã nhân viên bạn muốn sửa có định dạng: NV-YYYY");
+                        idEmployee = scanner.nextLine();
+                        if (Pattern.matches("NV-\\d{4}", idEmployee)) {
+                            break;
+                        } else {
+                            System.out.println("Mã nhân viên không đúng định dạng. Thử lại!");
+                        }
+                    }
+                    Employee editEmployee = employeeService.findById(idEmployee);
+                    if (editEmployee != null) {
+                        Employee newEmployee = EmployeeView.inputDataForEmployee("edit", editEmployee);
+                        boolean result = employeeService.editById(newEmployee);
+
+                        if (result) {
+                            System.out.println("Thông tin nhân viên đã được thay đổi thành công!");
+                        } else {
+                            System.out.println("Có lỗi khi cập nhật thông tin nhân viên!");
+                        }
                     } else {
-                        System.out.println("Mã nhân viên không đúng định dạng. Thử lại!");
+                        System.out.println("Không tìm thấy mã nhân viên mà bạn muốn sửa!");
                     }
                 }
-                int index = employeeManager.searchId(idEmployee);
-                if (index != -1) {
-                    Employee newEmployee = EmployeeView.inputDataForEmployee();
-                    employeeManager.edit(newEmployee, index);
+                case 4 -> {
+                    String idEmployee;
+                    while (true) {
+                        System.out.println("Nhập mã nhân viên bạn muốn xóa có định dạng: NV-YYYY");
+                        idEmployee = scanner.nextLine();
+                        if (Pattern.matches("NV-\\d{4}", idEmployee)) {
+                            break;
+                        } else {
+                            System.out.println("Mã nhân viên không đúng định dạng. Thử lại!");
+                        }
+                    }
+                    Employee deleteEmployee = employeeService.findById(idEmployee);
+                    if (deleteEmployee != null) {
+                        boolean result = employeeService.deleteById(deleteEmployee);
 
-                    System.out.println("Thông tin nhân viên đã được thay đổi!!!");
-                } else {
-                    System.out.println("Không tìm thấy mã khách hàng mà bạn muốn sửa");
+                        if (result) {
+                            System.out.println("Thông tin nhân viên đã được xóa thành công!");
+                        } else {
+                            System.out.println("Có lỗi khi cập nhật thông tin nhân viên!");
+                        }
+                    } else {
+                        System.out.println("Không tìm thấy mã nhân viên mà bạn muốn sửa!");
+                    }
                 }
-
+                default -> flag=false;
             }
         }
     }
 
     public static void customerManagement() {
-        System.out.println("1. Display list customers");
-        System.out.println("2. Add new customers");
-        System.out.println("3. Edit customers");
-        System.out.println("4. Return main menu");
-        System.out.print("Select an option customer: ");
-        int type = Integer.parseInt(scanner.nextLine());
-        switch (type){
-            case 1 -> {
-                System.out.println("Danh sách khách hàng");
-                CustomerView.showList(customerManager.getList());
-            }
-            case 2 -> {
-                Customer custormer = CustomerView.inputDataForCustormer();
-                customerManager.add(custormer);
-                System.out.println("Thêm mới thành công");
-            }
-            case 3 -> {
-                String idCustomer;
-                while (true){
-                    System.out.println("Nhập mã khách hàng bạn muốn sửa có định dạng: KH-YYYY");
-                    idCustomer= scanner.nextLine();
-                    if (Pattern.matches("KH-\\d{4}", idCustomer)) {
-                        break;
+        boolean flag=true;
+        while (flag){
+            System.out.println("1. Display list customers");
+            System.out.println("2. Add new customers");
+            System.out.println("3. Edit customers");
+            System.out.println("4. Return main menu");
+            System.out.print("Select an option customer: ");
+            int type = Integer.parseInt(scanner.nextLine());
+            switch (type) {
+                case 1 -> {
+                    System.out.println("Danh sách khách hàng");
+                    CustomerView.showList(customerService.findAll());
+                }
+                case 2 -> {
+                    Customer customer = new Customer();
+                    CustomerView.inputDataForCustomer("add", customer);
+                    customerService.add(customer);
+                    System.out.println("Thêm mới thành công");
+                }
+                case 3 -> {
+                    String idCustomer;
+                    while (true) {
+                        System.out.println("Nhập mã khách hàng bạn muốn sửa có định dạng: KH-YYYY");
+                        idCustomer = scanner.nextLine();
+                        if (Pattern.matches("KH-\\d{4}", idCustomer)) {
+                            break;
+                        } else {
+                            System.out.println("Mã khách hàng không đúng định dạng. Thử lại!");
+                        }
+                    }
+                    Customer editCustomer = customerService.findById(idCustomer);
+                    if (editCustomer != null) {
+                        Customer newCustomer = CustomerView.inputDataForCustomer("edit", editCustomer);
+                        boolean result = customerService.editById(newCustomer);
+                        if (result) {
+                            System.out.println("Thông tin khách hàng đã được thay đổi thành công!");
+                        } else {
+                            System.out.println("Có lỗi khi cập nhật thông tin khách hàng!");
+                        }
                     } else {
-                        System.out.println("Mã khách hàng không đúng định dạng. Thử lại!");
+                        System.out.println("Không tìm thấy mã khách hàng mà bạn muốn sửa!");
                     }
                 }
-                int index = customerManager.searchId(idCustomer);
-                if (index != -1) {
-                    Customer newCustomer = CustomerView.inputDataForCustormer();
-                    customerManager.edit(newCustomer, index);
-                    newCustomer.setIdPerson(idCustomer);
-                    System.out.println("Thông tin khách hàng đã được thay đổi!!!");
-                } else {
-                    System.out.println("Không tìm thấy mã khách hàng mà bạn muốn sửa");
+                case 4 ->{
+                    String idCustomer;
+                    while (true) {
+                        System.out.println("Nhập mã khách hàng bạn muốn xóa có định dạng: KH-YYYY");
+                        idCustomer = scanner.nextLine();
+                        if (Pattern.matches("KH-\\d{4}", idCustomer)) {
+                            break;
+                        } else {
+                            System.out.println("Mã khách hàng không đúng định dạng. Thử lại!");
+                        }
+                    }
+                    Customer deleteCustomer = customerService.findById(idCustomer);
+                    if(deleteCustomer!=null){
+                        boolean result = customerService.deleteById(deleteCustomer);
+                        if (result) {
+                            System.out.println("Thông tin khách hàng đã được xóa thành công!");
+                        } else {
+                            System.out.println("Có lỗi khi cập nhật thông tin khách hàng!");
+                        }
+                    }
+                    else {
+                        System.out.println("Không tìm thấy mã khách hàng mà bạn muốn sửa!");
+                    }
                 }
-
+                default -> flag=false;
             }
         }
     }
