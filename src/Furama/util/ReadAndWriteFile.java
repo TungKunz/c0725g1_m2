@@ -16,6 +16,19 @@ public class ReadAndWriteFile {
         bufferedWriter.close();
         fileWriter.close();
     }
+    public static void writeBinaryListStringToCSV(String filePath, List<String> list, boolean append) throws IOException {
+        File file = new File(filePath);
+        FileOutputStream fileOutputStream = new FileOutputStream(file, append);
+        DataOutputStream dataOutputStream = new DataOutputStream(fileOutputStream);
+
+        for (String line : list) {
+            dataOutputStream.writeUTF(line);
+        }
+
+        dataOutputStream.close();
+        fileOutputStream.close();
+    }
+
 
     public static List<String> readFileCSVToList(String filePatch) throws IOException {
         List<String> stringList = new ArrayList<>();
@@ -29,4 +42,21 @@ public class ReadAndWriteFile {
 
         return stringList;
     }
+    public static List<String> readBinaryFileCSVToList(String filePatch) throws IOException {
+        List<String> stringList = new ArrayList<>();
+        File file = new File(filePatch);
+        try (DataInputStream dataInputStream = new DataInputStream(new FileInputStream(file))) {
+            while (true) {
+                try {
+                    String line = dataInputStream.readUTF();
+                    stringList.add(line);
+                } catch (EOFException e) {
+                    break;
+                }
+            }
+        }
+        return stringList;
+    }
+
+
 }

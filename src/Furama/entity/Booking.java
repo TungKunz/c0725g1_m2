@@ -1,18 +1,17 @@
 package Furama.entity;
+import java.time.LocalDate;
+import java.util.Objects;
 
-import Furama.entity.facility.Facility;
-import Furama.entity.person.Customer;
-
-public class Booking {
+public class Booking implements Comparable<Booking> {
     private String bookingId;
-    private String bookingDate;
-    private String startDate;
-    private String endDate;
-    private Customer customerId;
-    private Facility serviceId;
-    private Booking(){}
+    private LocalDate bookingDate;
+    private LocalDate startDate;
+    private LocalDate endDate;
+    private String customerId;
+    private String serviceId;
+    public Booking(){}
 
-    public Booking(String bookingId, String bookingDate, String startDate, String endDate, Customer customerId, Facility serviceId) {
+    public Booking(String bookingId, LocalDate bookingDate, LocalDate startDate, LocalDate endDate, String customerId, String serviceId) {
         this.bookingId = bookingId;
         this.bookingDate = bookingDate;
         this.startDate = startDate;
@@ -29,43 +28,43 @@ public class Booking {
         this.bookingId = bookingId;
     }
 
-    public String getBookingDate() {
+    public LocalDate getBookingDate() {
         return bookingDate;
     }
 
-    public void setBookingDate(String bookingDate) {
+    public void setBookingDate(LocalDate bookingDate) {
         this.bookingDate = bookingDate;
     }
 
-    public String getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(String startDate) {
+    public void setStartDate(LocalDate startDate) {
         this.startDate = startDate;
     }
 
-    public String getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(String endDate) {
+    public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }
 
-    public Customer getCustomerId() {
+    public String getCustomerId() {
         return customerId;
     }
 
-    public void setCustomerId(Customer customerId) {
+    public void setCustomerId(String customerId) {
         this.customerId = customerId;
     }
 
-    public Facility getServiceId() {
+    public String getServiceId() {
         return serviceId;
     }
 
-    public void setServiceId(Facility serviceId) {
+    public void setServiceId(String serviceId) {
         this.serviceId = serviceId;
     }
 
@@ -80,4 +79,26 @@ public class Booking {
                 ", serviceId=" + serviceId +
                 '}';
     }
+
+    @Override
+    public int compareTo(Booking o) {
+        int result = this.startDate.compareTo(o.startDate);
+        if (result != 0) return result;
+        result = this.endDate.compareTo(o.endDate);
+        if (result != 0) return result;
+        return this.bookingId.compareTo(o.bookingId);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Booking booking)) return false;
+        return Objects.equals(bookingId, booking.bookingId);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(bookingId);
+    }
+
 }

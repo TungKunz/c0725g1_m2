@@ -5,7 +5,7 @@ public class Contract {
     private Booking bookingId;
     private double deposit;
     private double totalPayment;
-    Contract(){}
+    public Contract(){}
     public Contract(String contractId, Booking bookingId, double deposit, double totalPayment) {
         this.contractId = contractId;
         this.bookingId = bookingId;

@@ -3,8 +3,8 @@ package Furama.entity.facility;
 public class House extends Facility {
     private String roomStandards;
     private int numberOfFloors;
-    House(){}
-    public House(int idFacility, String nameFacility, double areaFacility, long costFacility, int numberMemberMaxFacility, String rentalStyleFacility, String roomStandards, int numberOfFloors) {
+    public House(){}
+    public House(String idFacility, String nameFacility, double areaFacility, long costFacility, int numberMemberMaxFacility, String rentalStyleFacility, String roomStandards, int numberOfFloors) {
         super(idFacility, nameFacility, areaFacility, costFacility, numberMemberMaxFacility, rentalStyleFacility);
         this.roomStandards = roomStandards;
         this.numberOfFloors = numberOfFloors;
@@ -34,7 +34,13 @@ public class House extends Facility {
     @Override
     public String toString() {
         return "House{" +
-                "roomStandards='" + roomStandards + '\'' +
+                "idFacility='" + getIdFacility() + '\'' +
+                ", nameFacility='" + getNameFacility() + '\'' +
+                ", areaFacility=" + getAreaFacility() +
+                ", costFacility=" + getCostFacility() +
+                ", numberMemberMaxFacility=" + getNumberMemberMaxFacility() +
+                ", rentalStyleFacility='" + getRentalStyleFacility() + '\'' +
+                ", roomStandards='" + roomStandards + '\'' +
                 ", numberOfFloors=" + numberOfFloors +
                 '}';
     }

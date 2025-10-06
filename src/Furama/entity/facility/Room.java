@@ -2,12 +2,12 @@ package Furama.entity.facility;
 
 public class Room extends Facility{
     private String freeService;
-    Room(){}
+    public Room(){}
     public Room(String freeService) {
         this.freeService = freeService;
     }
 
-    public Room(int idFacility, String nameFacility, double areaFacility, long costFacility, int numberMemberMaxFacility, String rentalStyleFacility, String freeService) {
+    public Room(String idFacility, String nameFacility, double areaFacility, long costFacility, int numberMemberMaxFacility, String rentalStyleFacility, String freeService) {
         super(idFacility, nameFacility, areaFacility, costFacility, numberMemberMaxFacility, rentalStyleFacility);
         this.freeService = freeService;
     }
@@ -23,9 +23,16 @@ public class Room extends Facility{
     @Override
     public String toString() {
         return "Room{" +
-                "freeService='" + freeService + '\'' +
+                "idFacility='" + getIdFacility() + '\'' +
+                ", nameFacility='" + getNameFacility() + '\'' +
+                ", areaFacility=" + getAreaFacility() +
+                ", costFacility=" + getCostFacility() +
+                ", numberMemberMaxFacility=" + getNumberMemberMaxFacility() +
+                ", rentalStyleFacility='" + getRentalStyleFacility() + '\'' +
+                ", freeService='" + freeService + '\'' +
                 '}';
     }
+
 
     @Override
     public String getInforToCSV() {

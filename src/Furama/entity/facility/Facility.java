@@ -1,15 +1,17 @@
 package Furama.entity.facility;
 
+import java.util.Objects;
+
 public abstract class Facility {
-    private int idFacility; //mã dịch vụ
+    private String idFacility; //mã dịch vụ
     private String nameFacility; //tên dịch vụ
     private double areaFacility;
     private long costFacility;
     private int numberMemberMaxFacility;
     private String rentalStyleFacility;
-    Facility(){}
+    public Facility(){}
 
-    public Facility(int idFacility, String nameFacility, double areaFacility, long costFacility, int numberMemberMaxFacility, String rentalStyleFacility) {
+    public Facility(String idFacility, String nameFacility, double areaFacility, long costFacility, int numberMemberMaxFacility, String rentalStyleFacility) {
         this.idFacility = idFacility;
         this.nameFacility = nameFacility;
         this.areaFacility = areaFacility;
@@ -18,11 +20,11 @@ public abstract class Facility {
         this.rentalStyleFacility = rentalStyleFacility;
     }
 
-    public int getIdFacility() {
+    public String getIdFacility() {
         return idFacility;
     }
 
-    public void setIdFacility(int idFacility) {
+    public void setIdFacility(String idFacility) {
         this.idFacility = idFacility;
     }
 
@@ -78,4 +80,16 @@ public abstract class Facility {
                 '}';
     }
     public abstract String getInforToCSV();
+
+    @Override
+    public boolean equals(Object object) {
+        if (object == null || getClass() != object.getClass()) return false;
+        Facility facility = (Facility) object;
+        return Objects.equals(idFacility, facility.idFacility);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(idFacility);
+    }
 }

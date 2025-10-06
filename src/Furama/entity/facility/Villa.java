@@ -5,7 +5,7 @@ public class Villa extends Facility {
     private double poolArea;
     private int numberOfFloors;
 
-    Villa() {
+    public Villa() {
     }
 
     public Villa(String roomStandards, double poolArea, int numberOfFloors) {
@@ -14,7 +14,7 @@ public class Villa extends Facility {
         this.numberOfFloors = numberOfFloors;
     }
 
-    public Villa(int idFacility, String nameFacility, double areaFacility, long costFacility, int numberMemberMaxFacility, String rentalStyleFacility, String roomStandards, double poolArea, int numberOfFloors) {
+    public Villa(String idFacility, String nameFacility, double areaFacility, long costFacility, int numberMemberMaxFacility, String rentalStyleFacility, String roomStandards, double poolArea, int numberOfFloors) {
         super(idFacility, nameFacility, areaFacility, costFacility, numberMemberMaxFacility, rentalStyleFacility);
         this.roomStandards = roomStandards;
         this.poolArea = poolArea;
@@ -48,11 +48,18 @@ public class Villa extends Facility {
     @Override
     public String toString() {
         return "Villa{" +
-                "roomStandards='" + roomStandards + '\'' +
+                "idFacility='" + getIdFacility() + '\'' +
+                ", nameFacility='" + getNameFacility() + '\'' +
+                ", areaFacility=" + getAreaFacility() +
+                ", costFacility=" + getCostFacility() +
+                ", numberMemberMaxFacility=" + getNumberMemberMaxFacility() +
+                ", rentalStyleFacility='" + getRentalStyleFacility() + '\'' +
+                ", roomStandards='" + roomStandards + '\'' +
                 ", poolArea=" + poolArea +
                 ", numberOfFloors=" + numberOfFloors +
                 '}';
     }
+
 
     @Override
     public String getInforToCSV() {

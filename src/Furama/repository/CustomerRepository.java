@@ -61,17 +61,7 @@ public class CustomerRepository implements ICustomerRepository {
                 break;
             }
         }
-        List<String> stringList = new ArrayList<>();
-        for (Customer customer : customerList) {
-            stringList.add(customer.getInforToCSV());
-        }
-        try {
-            ReadAndWriteFile.writeListStringToCSV(CUSTOMER_FILE, stringList, false);
-        } catch (IOException e) {
-            System.out.println("Lỗi ghi file");
-            return false;
-        }
-        return true;
+        return writeFileList(customerList);
     }
 
     @Override
@@ -83,17 +73,7 @@ public class CustomerRepository implements ICustomerRepository {
                 break;
             }
         }
-        List<String> stringList = new ArrayList<>();
-        for (Customer customer : customerList) {
-            stringList.add(customer.getInforToCSV());
-        }
-        try {
-            ReadAndWriteFile.writeListStringToCSV(CUSTOMER_FILE, stringList, false);
-        } catch (IOException e) {
-            System.out.println("Lỗi ghi file");
-            return false;
-        }
-        return true;
+        return writeFileList(customerList);
     }
 
     @Override
@@ -105,5 +85,18 @@ public class CustomerRepository implements ICustomerRepository {
             }
         }
         return null;
+    }
+    public boolean writeFileList(List<Customer> customerList){
+        List<String> stringList = new ArrayList<>();
+        for (Customer customer : customerList) {
+            stringList.add(customer.getInforToCSV());
+        }
+        try {
+            ReadAndWriteFile.writeListStringToCSV(CUSTOMER_FILE, stringList, false);
+        } catch (IOException e) {
+            System.out.println("Lỗi ghi file");
+            return false;
+        }
+        return true;
     }
 }

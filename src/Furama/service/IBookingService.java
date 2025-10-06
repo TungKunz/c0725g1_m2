@@ -2,5 +2,9 @@ package Furama.service;
 
 import Furama.entity.Booking;
 
-public interface IBookingService extends IService<Booking> {
+import java.util.Set;
+
+public interface IBookingService{
+    Set<Booking> getAll();
+    boolean add(Booking booking);
 }
