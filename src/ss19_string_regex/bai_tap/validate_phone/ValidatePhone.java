@@ -14,7 +14,7 @@ public class ValidatePhone {
         }
     }
     public static boolean checkPhone(String phoneNumber){
-        String regex= "^\\(\\d{2}\\)-\\(0\\d{9}\\)" +"$";
+        String regex= "^\\(\\d{2}\\)-\\(0\\d{9}\\)$";
         return phoneNumber.matches(regex);
     }
 }
