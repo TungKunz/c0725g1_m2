@@ -9,7 +9,7 @@ public class FacilityView {
     private static final Scanner scanner = new Scanner(System.in);
     public static String inputId(){
         while (true) {
-            System.out.print("Nhập mã facility");
+            System.out.print("Nhập mã facility: ");
             String id = scanner.nextLine();
             if (CheckFacility.checkId("villa",id)){
                 return id;

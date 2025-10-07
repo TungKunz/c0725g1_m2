@@ -1,6 +1,7 @@
 package Furama.controller;
 
 import Furama.entity.Booking;
+import Furama.entity.Contract;
 import Furama.entity.facility.Facility;
 import Furama.entity.facility.House;
 import Furama.entity.facility.Room;
@@ -11,6 +12,7 @@ import Furama.service.*;
 import Furama.validate.CheckFacility;
 import Furama.validate.CheckPerson;
 import Furama.view.BookingView;
+import Furama.view.ContractView;
 import Furama.view.facility.HouseView;
 import Furama.view.facility.RoomView;
 import Furama.view.facility.VillaView;
@@ -18,6 +20,7 @@ import Furama.view.person.CustomerView;
 import Furama.view.person.EmployeeView;
 
 
+import java.util.Queue;
 import java.util.Scanner;
 
 public class FuramaController {
@@ -26,6 +29,8 @@ public class FuramaController {
     private static final IService<Customer> customerService = new CustomerService();
     private static final IFacilityService facilityService = new FacilityService();
     private static final IBookingService bookingService = new BookingService();
+    private static final IContactService contractService = new ContactService();
+    private static Queue<Booking> bookingQueue = bookingService.getBookingQueueByOrder();
 
     public static void displayMainMenu() {
         while (true) {
@@ -435,6 +440,33 @@ public class FuramaController {
                 case 2->{
                     System.out.println("Display list  booking");
                     BookingView.displayAllBookings();
+                }
+                case 3->{
+                    System.out.println("Create new contracts");
+                    Contract tempContract= ContractView.inputContract();
+                    if (bookingQueue.isEmpty()) {
+                        System.out.println("Không có booking nào để tạo hợp đồng!");
+                        break;
+                    }
+                    Booking currentBooking = bookingQueue.remove();
+                    String bookingId = currentBooking.getBookingId();
+                    Contract contract = new Contract(
+                            tempContract.getContractId(),
+                            bookingId,
+                            tempContract.getDeposit(),
+                            tempContract.getTotalPayment()
+                    );
+                    boolean success = contractService.addContract(contract);
+                    if (success) {
+                        System.out.println("Contract created successfully for booking: " + bookingId);
+                    } else {
+                        System.out.println("Failed to create contract!");
+                    }
+
+                }
+                case 4->{
+                    System.out.println("Danh sách");
+                    ContractView.displayContractList(contractService.findAllContracts());
                 }
                 default -> flag=false;
             }

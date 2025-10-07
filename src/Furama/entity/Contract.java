@@ -2,11 +2,16 @@ package Furama.entity;
 
 public class Contract {
     private String contractId;
-    private Booking bookingId;
+    private String bookingId;
     private double deposit;
     private double totalPayment;
-    public Contract(){}
-    public Contract(String contractId, Booking bookingId, double deposit, double totalPayment) {
+
+    public Contract(String contractId, double deposit, double totalPayment){
+        this.contractId = contractId;
+        this.deposit = deposit;
+        this.totalPayment = totalPayment;
+    }
+    public Contract(String contractId, String bookingId, double deposit, double totalPayment) {
         this.contractId = contractId;
         this.bookingId = bookingId;
         this.deposit = deposit;
@@ -21,11 +26,11 @@ public class Contract {
         this.contractId = contractId;
     }
 
-    public Booking getBookingId() {
+    public String getBookingId() {
         return bookingId;
     }
 
-    public void setBookingId(Booking bookingId) {
+    public void setBookingId(String bookingId) {
         this.bookingId = bookingId;
     }
 

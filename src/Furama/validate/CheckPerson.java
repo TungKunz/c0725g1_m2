@@ -36,6 +36,7 @@ public class CheckPerson {
         }
     }
 
+
     public static boolean checkPhoneNumber(String phone){
         String regex= "0\\d{9}";
         return phone.matches(regex);

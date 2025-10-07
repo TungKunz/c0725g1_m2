@@ -1,5 +1,8 @@
 package Furama.repository;
 import Furama.entity.facility.Facility;
+import Furama.entity.facility.House;
+import Furama.entity.facility.Room;
+import Furama.entity.facility.Villa;
 
 import java.util.LinkedHashMap;
 import java.util.Map;
@@ -7,7 +10,22 @@ import java.util.Map;
 public class FacilityRepository implements IFacilityRepository{
     private static final Map<Facility,Integer> facilityMap = new LinkedHashMap<>();
 
+    static {
 
+        facilityMap.put(new Villa(
+                "SVVL-9999", "Luxury Villa", 200, 5000, 10, "Daily", "Premium", 50, 2
+        ), 0);
+
+
+        facilityMap.put(new House(
+                "SVHO-8888", "Family House", 100, 2000, 6, "Daily", "Standard", 2
+        ), 0);
+
+
+        facilityMap.put(new Room(
+                "SVRO-7777", "Deluxe Room", 50, 1000, 2, "Daily", "Free breakfast"
+        ), 0);
+    }
     @Override
     public boolean add(Facility facility) {
         if (facility == null) return false;

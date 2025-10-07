@@ -4,6 +4,7 @@ import Furama.entity.Booking;
 import Furama.entity.facility.Facility;
 import Furama.repository.*;
 
+import java.util.Queue;
 import java.util.Set;
 
 public class BookingService implements IBookingService {
@@ -33,6 +34,15 @@ public class BookingService implements IBookingService {
             facilityRepository.increaseUsage(facility);
         }
         return added;
+    }
+
+    @Override
+    public Queue<Booking> getBookingQueueByOrder() {
+        return bookingRepository.getBookingQueueByOrder();
+    }
+    @Override
+    public boolean removeBooking(Booking booking) {
+        return bookingRepository.removeBooking(booking);
     }
 
 }
