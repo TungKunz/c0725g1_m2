@@ -441,13 +441,18 @@ public class FuramaController {
                     System.out.println("Display list  booking");
                     BookingView.displayAllBookings();
                 }
-                case 3->{
+                case 3 -> {
+                    System.out.println("Display list  booking");
+                    BookingView.displayAllBookings();
                     System.out.println("Create new contracts");
-                    Contract tempContract= ContractView.inputContract();
+                    Contract tempContract = ContractView.inputContract();
+                    Queue<Booking> bookingQueue = bookingService.getBookingQueueByOrder();
+
                     if (bookingQueue.isEmpty()) {
                         System.out.println("Không có booking nào để tạo hợp đồng!");
                         break;
                     }
+
                     Booking currentBooking = bookingQueue.remove();
                     String bookingId = currentBooking.getBookingId();
                     Contract contract = new Contract(
@@ -456,14 +461,16 @@ public class FuramaController {
                             tempContract.getDeposit(),
                             tempContract.getTotalPayment()
                     );
+
                     boolean success = contractService.addContract(contract);
                     if (success) {
+                        bookingService.removeBooking(currentBooking);
                         System.out.println("Contract created successfully for booking: " + bookingId);
                     } else {
                         System.out.println("Failed to create contract!");
                     }
-
                 }
+
                 case 4->{
                     System.out.println("Danh sách");
                     ContractView.displayContractList(contractService.findAllContracts());

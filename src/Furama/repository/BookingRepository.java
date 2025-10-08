@@ -7,15 +7,24 @@ import java.util.*;
 public class BookingRepository implements IBookingRepository {
     private static final Set<Booking> bookingSet = new TreeSet<>();
     static {
-        bookingSet.add(new Booking("B001", LocalDate.of(2025,10,1),
-                LocalDate.of(2025,10,5), LocalDate.of(2025,10,10),
-                "KH-9999", "SVVL-9999"));
         bookingSet.add(new Booking("B002", LocalDate.of(2025,10,2),
                 LocalDate.of(2025,10,6), LocalDate.of(2025,10,12),
                 "KH-8888", "SVHO-8888"));
+        bookingSet.add(new Booking("B004", LocalDate.of(2025,10,3),
+                LocalDate.of(2025,10,7), LocalDate.of(2025,10,13),
+                "KH-7777", "SVRO-7777"));
         bookingSet.add(new Booking("B003", LocalDate.of(2025,10,3),
                 LocalDate.of(2025,10,7), LocalDate.of(2025,10,13),
                 "KH-7777", "SVRO-7777"));
+        bookingSet.add(new Booking("B005", LocalDate.of(2025,10,3),
+                LocalDate.of(2025,10,7), LocalDate.of(2025,10,13),
+                "KH-7777", "SVRO-7777"));
+        bookingSet.add(new Booking("B001", LocalDate.of(2025,10,1),
+                LocalDate.of(2025,10,8), LocalDate.of(2025,10,10),
+                "KH-9999", "SVVL-9999"));
+        bookingSet.add(new Booking("B001", LocalDate.of(2025,10,10),
+                LocalDate.of(2025,10,29), LocalDate.of(2025,10,10),
+                "KH-9999", "SVVL-9999"));
     }
 
 

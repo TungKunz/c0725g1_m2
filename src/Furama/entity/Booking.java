@@ -1,6 +1,5 @@
 package Furama.entity;
 import java.time.LocalDate;
-import java.util.Objects;
 
 public class Booking implements Comparable<Booking> {
     private String bookingId;
@@ -82,23 +81,11 @@ public class Booking implements Comparable<Booking> {
 
     @Override
     public int compareTo(Booking o) {
+        if (this.bookingId.equals(o.bookingId)) return 0;
         int result = this.startDate.compareTo(o.startDate);
         if (result != 0) return result;
         result = this.endDate.compareTo(o.endDate);
         if (result != 0) return result;
         return this.bookingId.compareTo(o.bookingId);
     }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Booking booking)) return false;
-        return Objects.equals(bookingId, booking.bookingId);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(bookingId);
-    }
-
 }

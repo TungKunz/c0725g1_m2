@@ -10,11 +10,6 @@ import java.util.ArrayList;
 
 public class ContractRepository implements IContactRepository{
     private static final List<Contract> contractList = new ArrayList<>();
-//    static {
-//        contractList.add(new Contract("C001", "B001", 1000, 5000));
-//        contractList.add(new Contract("C002", "B002", 2000, 8000));
-//        contractList.add(new Contract("C003", "B003", 1500, 6000));
-//    }
 
     @Override
     public boolean add(Contract contract) {

@@ -82,14 +82,15 @@ public abstract class Facility {
     public abstract String getInforToCSV();
 
     @Override
-    public boolean equals(Object object) {
-        if (object == null || getClass() != object.getClass()) return false;
-        Facility facility = (Facility) object;
-        return Objects.equals(idFacility, facility.idFacility);
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Facility facility = (Facility) o;
+        return Objects.equals(this.getIdFacility(), facility.getIdFacility());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(idFacility);
+        return Objects.hash(this.getIdFacility());
     }
 }

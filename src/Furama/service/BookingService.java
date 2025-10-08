@@ -3,9 +3,9 @@ package Furama.service;
 import Furama.entity.Booking;
 import Furama.entity.facility.Facility;
 import Furama.repository.*;
-
 import java.util.Queue;
 import java.util.Set;
+
 
 public class BookingService implements IBookingService {
     private static final IFacilityRepository facilityRepository = new FacilityRepository();
@@ -27,6 +27,13 @@ public class BookingService implements IBookingService {
         if (facilityRepository.findById(booking.getServiceId()) == null) {
             System.out.println("Mã dịch vụ không tồn tại!");
             return false;
+        }
+        Set<Booking> bookingSet = bookingRepository.getAll();
+        for (Booking existing : bookingSet) {
+            if (existing.getBookingId().equals(booking.getBookingId())) {
+                System.out.println("Mã booking " + booking.getBookingId() + " đã tồn tại!");
+                return false;
+            }
         }
         boolean added = bookingRepository.add(booking);
         if (added) {
