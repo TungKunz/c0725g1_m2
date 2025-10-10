@@ -22,7 +22,7 @@ public class Herbivore extends Animal {
     @Override
     public String toString() {
         return "Herbivore{" +
-                ", id='" + super.getId() + '\'' +
+                "id='" + super.getId() + '\'' +
                 ", name='" + super.getName() + '\'' +
                 ", birthYear=" + super.getBirthYear() +
                 ", cage='" + super.getCage() + '\'' +

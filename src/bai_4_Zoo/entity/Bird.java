@@ -32,7 +32,7 @@ public class Bird extends Animal {
     @Override
     public String toString() {
         return "Bird{" +
-                ", id='" + super.getId() + '\'' +
+                "id='" + super.getId() + '\'' +
                 ", name='" + super.getName() + '\'' +
                 ", birthYear=" + super.getBirthYear() +
                 ", cage='" + super.getCage() + '\'' +

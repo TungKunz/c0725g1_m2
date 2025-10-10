@@ -9,86 +9,42 @@ public class CarnivoreRepository implements IAnimalRepository<Carnivore> {
     private final String ANIMAL_FILE = "D:\\CodeGym\\Module2\\src\\bai_4_Zoo\\data\\animal.csv";
     @Override
     public List<Carnivore> findAll() {
-            List<Carnivore> carnivoreList = new ArrayList<>();
-            List<String> stringList = new ArrayList<>();
-            try {
-                stringList = ReadAndWriteFile.readFileCSVToList(ANIMAL_FILE);
-            } catch (IOException e) {
-                System.out.println("Có lỗi xảy ra: " + e.getMessage());
-            }
-            String[] array;
-            for (String line : stringList) {
-                try {
-                    array = line.split(",");
-                    if(array[0].equalsIgnoreCase("carnivore")){
-                        Carnivore carnivore = new Carnivore(array[1], array[2], Integer.parseInt(array[3]), array[4], array[5]);
-                        carnivoreList.add(carnivore);
-                    }
-                } catch (Exception e) {
-                    continue;
+        List<Carnivore> carnivores = new ArrayList<>();
+        try {
+            List<String> lines = ReadAndWriteFile.readFileCSVToList(ANIMAL_FILE);
+            for (String line : lines) {
+                String[] array = line.split(",");
+                if (array[0].equalsIgnoreCase("carnivore")) {
+                    Carnivore carnivore = new Carnivore(array[1], array[2], Integer.parseInt(array[3]), array[4],
+                            array[5]);
+                    carnivores.add(carnivore);
                 }
             }
-            return carnivoreList;
+        } catch (IOException e) {
+            System.out.println("Lỗi đọc file: " + e.getMessage());
+        }
+        return carnivores;
     }
-
     @Override
     public boolean add(Carnivore carnivore) {
-        List<String> stringList = new ArrayList<>();
-        stringList.add(carnivore.getInforToCSV());
         try {
-            ReadAndWriteFile.writeListStringToCSV(ANIMAL_FILE, stringList, true);
+            ReadAndWriteFile.writeListStringToCSV(ANIMAL_FILE,
+                    List.of(carnivore.getInforToCSV()), true);
+            return true;
         } catch (IOException e) {
-            System.out.println("lỗi ghi file");
+            System.out.println("Lỗi ghi file: " + e.getMessage());
             return false;
         }
-        return true;
     }
-
-    @Override
-    public boolean deleteById(Carnivore deleteCarnivore) {
-        List<Carnivore> carnivoreList = findAll();
-        for (int i = 0; i < carnivoreList.size(); i++) {
-            if (carnivoreList.get(i).getId().equals(deleteCarnivore.getId())) {
-                carnivoreList.remove(i);
-                break;
-            }
-        }
-        return writeFileList(carnivoreList);
-    }
-
-    @Override
-    public boolean editById(Carnivore editCarnivore) {
-        List<Carnivore> carnivoreList = findAll();
-        for (int i = 0; i < carnivoreList.size(); i++) {
-            if (carnivoreList.get(i).getId().equals(editCarnivore.getId())) {
-                carnivoreList.set(i, editCarnivore);
-                break;
-            }
-        }
-        return writeFileList(carnivoreList);
-    }
-
-    @Override
-    public Carnivore findById(String id) {
-        List<Carnivore> carnivoreList = findAll();
-        for (Carnivore carnivore : carnivoreList) {
-            if (carnivore.getId().equals(id)) {
-                return carnivore;
-            }
-        }
-        return null;
-    }
-    public boolean writeFileList(List<Carnivore> carnivoreList) {
-        List<String> stringList = new ArrayList<>();
-        for (Carnivore carnivore : carnivoreList) {
-            stringList.add(carnivore.getInforToCSV());
-        }
+    public boolean writeAll(List<Carnivore> carnivores) {
         try {
-            ReadAndWriteFile.writeListStringToCSV(ANIMAL_FILE, stringList, false);
+            List<String> lines = new ArrayList<>();
+            for (Carnivore b : carnivores) lines.add(b.getInforToCSV());
+            ReadAndWriteFile.writeListStringToCSV(ANIMAL_FILE, lines, false);
+            return true;
         } catch (IOException e) {
-            System.out.println("Lỗi ghi file");
+            System.out.println("Lỗi ghi file: " + e.getMessage());
             return false;
         }
-        return true;
     }
 }

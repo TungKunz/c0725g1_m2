@@ -19,7 +19,7 @@ public class Carnivore extends Animal{
     @Override
     public String toString() {
         return "Carnivore{" +
-                ", id='" + super.getId() + '\'' +
+                "id='" + super.getId() + '\'' +
                 ", name='" + super.getName() + '\'' +
                 ", birthYear=" + super.getBirthYear() +
                 ", cage='" + super.getCage() + '\'' +
