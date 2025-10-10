@@ -2,6 +2,7 @@ package Furama.repository;
 
 import Furama.entity.person.Employee;
 import Furama.util.ReadAndWriteFile;
+import Furama.validate.CheckPerson;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -9,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class EmployeeRepository implements IEmployeeRepository {
-    private final String EMPLOYEE_FILE = "src/Furama/data/employee.csv";
+    private final String EMPLOYEE_FILE = "D:\\CodeGym\\Module2\\src\\Furama\\data\\person.csv";
 
     @Override
     public List<Employee> findAll() {
@@ -26,18 +27,20 @@ public class EmployeeRepository implements IEmployeeRepository {
             try {
                 lineException++;
                 array = line.split(",");
-                String idPerson = array[0];
-                String namePerson = array[1];
-                LocalDate dateOfBirthPerson = LocalDate.parse(array[2]);
-                byte genderPerson = Byte.parseByte(array[3]);
-                String identityNumberPerson = array[4];
-                String phoneNumberPerson = array[5];
-                String emailPerson = array[6];
-                String educationLevel = array[7];
-                String position = array[8];
-                int salary = Integer.parseInt(array[9]);
-                Employee employee = new Employee(idPerson, namePerson, dateOfBirthPerson, genderPerson, identityNumberPerson, phoneNumberPerson, emailPerson, educationLevel, position, salary);
-                employeeList.add(employee);
+                if(CheckPerson.checkId("employee",array[0])){
+                    String idPerson = array[0];
+                    String namePerson = array[1];
+                    LocalDate dateOfBirthPerson = LocalDate.parse(array[2]);
+                    byte genderPerson = Byte.parseByte(array[3]);
+                    String identityNumberPerson = array[4];
+                    String phoneNumberPerson = array[5];
+                    String emailPerson = array[6];
+                    String educationLevel = array[7];
+                    String position = array[8];
+                    int salary = Integer.parseInt(array[9]);
+                    Employee employee = new Employee(idPerson, namePerson, dateOfBirthPerson, genderPerson, identityNumberPerson, phoneNumberPerson, emailPerson, educationLevel, position, salary);
+                    employeeList.add(employee);
+                }
             } catch (Exception e) {
                 System.out.println("Lỗi gì sai định dạng class tại dòng " +lineException);
             }

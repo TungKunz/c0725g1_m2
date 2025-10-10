@@ -9,9 +9,9 @@ import java.util.Scanner;
 public class CustomerView extends  PersonView{
     private static final Scanner scanner = new Scanner(System.in);
     private static final String[] arraysType = {"Diamond", "Platinum", "Gold","Silver","Member"};
-    public static Customer inputDataForCustomer(String action, Customer customer) {
+    public static Customer inputDataForCustomer(String action,String id ,Customer customer) {
         if (action.equals("add")) {
-            customer.setIdPerson(inputCustomerId());
+            customer.setIdPerson(id);
         }
         customer.setNamePerson(inputName());
         customer.setDateOfBirthPerson(inputBirthDate());

@@ -17,10 +17,15 @@ public class BirdRepository implements IAnimalRepository<Bird> {
             List<String> lines = ReadAndWriteFile.readFileCSVToList(ANIMAL_FILE);
             for (String line : lines) {
                 String[] array = line.split(",");
-                if (array[0].equalsIgnoreCase("bird")) {
-                    Bird bird = new Bird(array[1], array[2], Integer.parseInt(array[3]), array[4],
-                            Double.parseDouble(array[5]), Boolean.parseBoolean(array[6]));
-                    birds.add(bird);
+                try {
+                    if (array[0].equalsIgnoreCase("bird")) {
+                        Bird bird = new Bird(array[1], array[2], Integer.parseInt(array[3]), array[4],
+                                Double.parseDouble(array[5]), Boolean.parseBoolean(array[6]));
+                        birds.add(bird);
+                    }
+                }catch (Exception e){
+                    System.out.println("lỗi");
+                    continue;
                 }
             }
         } catch (IOException e) {

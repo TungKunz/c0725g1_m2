@@ -16,6 +16,10 @@ public class CustomerService implements IService<Customer>{
 
     @Override
     public boolean add(Customer customer) {
+        Customer customer1= findById(customer.getIdPerson());
+        if (customer1 != null){
+            return false;
+        }
         return customerRepository.add(customer);
     }
 

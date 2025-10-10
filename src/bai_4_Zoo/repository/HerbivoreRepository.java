@@ -16,10 +16,14 @@ public class HerbivoreRepository implements IAnimalRepository<Herbivore> {
             List<String> lines = ReadAndWriteFile.readFileCSVToList(ANIMAL_FILE);
             for (String line : lines) {
                 String[] array = line.split(",");
-                if (array[0].equalsIgnoreCase("herbivore")) {
-                    Herbivore herbivore = new Herbivore(array[1], array[2], Integer.parseInt(array[3]), array[4],
-                            array[5]);
-                    herbivores.add(herbivore);
+                try {
+                    if (array[0].equalsIgnoreCase("herbivore")) {
+                        Herbivore herbivore = new Herbivore(array[1], array[2], Integer.parseInt(array[3]), array[4],
+                                array[5]);
+                        herbivores.add(herbivore);
+                    }
+                }catch (Exception e){
+                    continue;
                 }
             }
         } catch (IOException e) {

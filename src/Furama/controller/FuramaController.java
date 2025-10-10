@@ -30,7 +30,6 @@ public class FuramaController {
     private static final IFacilityService facilityService = new FacilityService();
     private static final IBookingService bookingService = new BookingService();
     private static final IContactService contractService = new ContactService();
-    private static Queue<Booking> bookingQueue = bookingService.getBookingQueueByOrder();
 
     public static void displayMainMenu() {
         while (true) {
@@ -168,9 +167,21 @@ public class FuramaController {
                 }
                 case 2 -> {
                     Customer customer = new Customer();
-                    CustomerView.inputDataForCustomer("add", customer);
-                    customerService.add(customer);
-                    System.out.println("Thêm mới thành công");
+                    String id;
+                    while (true){
+                        id=CustomerView.inputCustomerId();
+                        Customer checkCustomer= customerService.findById(id);
+                        if(checkCustomer==null){
+                            break;
+                        }
+                    }
+                    CustomerView.inputDataForCustomer("add",id, customer);
+                    boolean check= customerService.add(customer);
+                    if(check){
+                        System.out.println("Thêm mới thành công");
+                    }else {
+                        System.out.println("Thêm mới không thành công");
+                    }
                 }
                 case 3 -> {
                     String idCustomer;
@@ -185,7 +196,8 @@ public class FuramaController {
                     }
                     Customer editCustomer = customerService.findById(idCustomer);
                     if (editCustomer != null) {
-                        Customer newCustomer = CustomerView.inputDataForCustomer("edit", editCustomer);
+                        String id= CustomerView.inputCustomerId();
+                        Customer newCustomer = CustomerView.inputDataForCustomer("edit", id,editCustomer);
                         boolean result = customerService.editById(newCustomer);
                         if (result) {
                             System.out.println("Thông tin khách hàng đã được thay đổi thành công!");

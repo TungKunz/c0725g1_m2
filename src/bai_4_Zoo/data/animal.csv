@@ -1,3 +1,5 @@
-Carnivore,Carnivore-001,tùng,2001,ngoài sở thú ,abc
+carnivore,Carnivore-001,tùng,2001,ngoài sở thú ,abc
+bird,N-002,Nguyên,1993,trời,199.0,true
+carnivore,N-001,Nguyên,abc,bcd,199,true
 herbivore,H-002,Hoàng,2001,abc,cbb
 bird,N-001,Nguyên,1993,trời,199.0,true

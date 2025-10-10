@@ -1,7 +1,9 @@
 package Furama.repository;
 
 import Furama.entity.person.Customer;
+
 import Furama.util.ReadAndWriteFile;
+import Furama.validate.CheckPerson;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -9,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CustomerRepository implements ICustomerRepository {
-    private final String CUSTOMER_FILE = "src/Furama/data/customer.csv";
+    private final String CUSTOMER_FILE = "D:\\CodeGym\\Module2\\src\\Furama\\data\\person.csv";
 
     @Override
     public List<Customer> findAll() {
@@ -21,20 +23,16 @@ public class CustomerRepository implements ICustomerRepository {
             System.out.println("lỗi đọc file");
         }
         String[] array;
-
         for (String line : stringList) {
-            array = line.split(",");
-            String idPerson = array[0];
-            String namePerson = array[1];
-            LocalDate dateOfBirthPerson = LocalDate.parse(array[2]);
-            byte genderPerson = Byte.parseByte(array[3]);
-            String identityNumberPerson = array[4];
-            String phoneNumberPerson = array[5];
-            String emailPerson = array[6];
-            String customerType = array[7];
-            String address = array[8];
-            Customer customer = new Customer(idPerson, namePerson, dateOfBirthPerson, genderPerson, identityNumberPerson, phoneNumberPerson, emailPerson, customerType, address);
-            customerList.add(customer);
+            try {
+                array = line.split(",");
+                if (CheckPerson.checkId("customer", array[0])) {
+                    Customer customer = new Customer(array[0], array[1], LocalDate.parse(array[2]), Byte.parseByte(array[3]),  array[4],  array[5],  array[6],  array[7],  array[8]);
+                    customerList.add(customer);
+                }
+            } catch (Exception e) {
+                continue;
+            }
         }
         return customerList;
     }
@@ -86,7 +84,8 @@ public class CustomerRepository implements ICustomerRepository {
         }
         return null;
     }
-    public boolean writeFileList(List<Customer> customerList){
+
+    public boolean writeFileList(List<Customer> customerList) {
         List<String> stringList = new ArrayList<>();
         for (Customer customer : customerList) {
             stringList.add(customer.getInforToCSV());
