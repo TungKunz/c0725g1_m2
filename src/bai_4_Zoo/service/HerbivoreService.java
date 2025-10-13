@@ -18,7 +18,6 @@ public class HerbivoreService implements IAnimalService<Herbivore> {
     @Override
     public boolean add(Herbivore herbivore) {
         if (findById(herbivore.getId()) != null) {
-            System.out.println("ID đã tồn tại!");
             return false;
         }
         return herbivoreRepository.add(herbivore);
@@ -29,7 +28,6 @@ public class HerbivoreService implements IAnimalService<Herbivore> {
         List<Herbivore> herbivores = herbivoreRepository.findAll();
         boolean removed = herbivores.removeIf(b -> b.getId().equals(herbivore.getId()));
         if (!removed) {
-            System.out.println("Không tìm thấy chim cần xóa.");
             return false;
         }
         return ((HerbivoreRepository) herbivoreRepository).writeAll(herbivores);
@@ -47,7 +45,6 @@ public class HerbivoreService implements IAnimalService<Herbivore> {
             }
         }
         if (!found) {
-            System.out.println("Không tìm thấy chim để sửa.");
             return false;
         }
         return ((HerbivoreRepository) herbivoreRepository).writeAll(herbivores);

@@ -21,7 +21,6 @@ public class ZooController {
     private static final IAnimalService<Carnivore> carnivoreService= new CarnivoreService();
     private static final IAnimalService<Herbivore> herbivoreService= new HerbivoreService();
     private static final IAnimalService<Bird> birdService= new BirdService();
-    private static final ArrayList<Animal> arrayList = new ArrayList<>();
     private static final Scanner scanner = new Scanner(System.in);
 
     public static void displayMainMenu() {
@@ -141,7 +140,6 @@ public class ZooController {
     public static void searchAnimalByName() {
         String name = AnimalView.inputNameSearch().toLowerCase();
         List<Animal> resultList = new ArrayList<>();
-
         List<Animal> allAnimals = new ArrayList<>();
         allAnimals.addAll(carnivoreService.findAll());
         allAnimals.addAll(herbivoreService.findAll());

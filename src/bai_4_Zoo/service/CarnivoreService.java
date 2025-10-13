@@ -18,7 +18,6 @@ public class CarnivoreService implements IAnimalService<Carnivore> {
     @Override
     public boolean add(Carnivore carnivore) {
         if (findById(carnivore.getId()) != null) {
-            System.out.println("ID đã tồn tại!");
             return false;
         }
         return carnivoreRepository.add(carnivore);
@@ -29,7 +28,6 @@ public class CarnivoreService implements IAnimalService<Carnivore> {
         List<Carnivore> birds = carnivoreRepository.findAll();
         boolean removed = birds.removeIf(b -> b.getId().equals(carnivore.getId()));
         if (!removed) {
-            System.out.println("Không tìm thấy chim cần xóa.");
             return false;
         }
         return ((CarnivoreRepository) carnivoreRepository).writeAll(birds);
@@ -47,7 +45,6 @@ public class CarnivoreService implements IAnimalService<Carnivore> {
             }
         }
         if (!found) {
-            System.out.println("Không tìm thấy chim để sửa.");
             return false;
         }
         return ((CarnivoreRepository) carnivoreRepository).writeAll(carnivores);

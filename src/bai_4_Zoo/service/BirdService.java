@@ -17,7 +17,6 @@ public class BirdService implements IAnimalService<Bird> {
     @Override
     public boolean add(Bird bird) {
         if (findById(bird.getId()) != null) {
-            System.out.println("ID đã tồn tại!");
             return false;
         }
         return birdRepository.add(bird);
@@ -28,7 +27,6 @@ public class BirdService implements IAnimalService<Bird> {
         List<Bird> birds = birdRepository.findAll();
         boolean removed = birds.removeIf(b -> b.getId().equals(bird.getId()));
         if (!removed) {
-            System.out.println("Không tìm thấy chim cần xóa.");
             return false;
         }
         return ((BirdRepository) birdRepository).writeAll(birds);
@@ -46,7 +44,6 @@ public class BirdService implements IAnimalService<Bird> {
             }
         }
         if (!found) {
-            System.out.println("Không tìm thấy chim để sửa.");
             return false;
         }
         return ((BirdRepository) birdRepository).writeAll(birds);
@@ -55,7 +52,7 @@ public class BirdService implements IAnimalService<Bird> {
     @Override
     public Bird findById(String id) {
         for (Bird bird : birdRepository.findAll()) {
-            if (bird.getId().equalsIgnoreCase(id)) {
+            if (bird.getId().equals(id)) {
                 return bird;
             }
         }

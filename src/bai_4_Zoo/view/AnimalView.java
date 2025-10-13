@@ -1,9 +1,6 @@
 package bai_4_Zoo.view;
 
-import bai_4_Zoo.entity.Animal;
 import bai_4_Zoo.exception.ZooException;
-
-import java.util.List;
 import java.util.Scanner;
 
 public class AnimalView {
