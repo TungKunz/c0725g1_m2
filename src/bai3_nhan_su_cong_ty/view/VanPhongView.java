@@ -24,7 +24,7 @@ public class VanPhongView extends NhanVienView{
         while (true){
             System.out.println("Nhập mã nhân viên văn phòng có định dạng: VP-XXXX");
             String ma=scanner.nextLine();
-            if(KiemTra.kiemTraMa("kysu",ma)){
+            if(KiemTra.kiemTraMa("vanphong",ma)){
                 return ma;
             }
             System.out.println("Nhập mã sai định dạng!!!");

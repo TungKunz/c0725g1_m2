@@ -39,7 +39,7 @@ public class NhanVienVanPhong extends NhanVien{
 
     @Override
     public String thongTinCSV() {
-        return "banhang" +","+
+        return "vanphong" +","+
                 super.getMaNhanVien()+","+
                 super.getHoTen()+","+
                 super.getNamSinh()+","+

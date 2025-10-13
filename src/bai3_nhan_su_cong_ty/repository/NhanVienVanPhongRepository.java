@@ -18,7 +18,7 @@ public class NhanVienVanPhongRepository implements INhanVienRepository<NhanVienV
             for (String line : lines){
                 String[] array = line.split(",");
                 try{
-                    if(array[0].equalsIgnoreCase("vanphong")&& KiemTra.kiemTraMa("vanphong",array[1])){
+                    if(array[0].equals("vanphong") && KiemTra.kiemTraMa("vanphong",array[1])){
                         NhanVienVanPhong nhanVienVanPhong = new NhanVienVanPhong(array[1],array[2],Integer.parseInt(array[3]),array[4],Float.parseFloat(array[5]),Float.parseFloat(array[6]));
                         nhanVienVanPhongList.add(nhanVienVanPhong);
                     }

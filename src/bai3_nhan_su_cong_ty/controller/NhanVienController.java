@@ -115,6 +115,7 @@ public class NhanVienController {
 
     private static void hienThiDanhSach() {
         System.out.println("Danh sách nhân viên");
+        System.out.println("---------------------------------------------------------------------------");
         KySuView.inThongTin(kySuService.findAll());
         VanPhongView.inThongTin(vanPhongService.findAll());
         BanHangView.inThongTin(banHangService.findAll());
