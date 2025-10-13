@@ -2,6 +2,7 @@ package bai3_nhan_su_cong_ty.repository;
 
 import Furama.util.ReadAndWriteFile;
 import bai3_nhan_su_cong_ty.entity.KySu;
+import bai3_nhan_su_cong_ty.validate.KiemTra;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ public class KySuRepository implements INhanVienRepository<KySu> {
             for (String line : lines) {
                 String[] array = line.split(",");
                 try {
-                    if (array[0].equalsIgnoreCase("kysu")) {
+                    if (array[0].equalsIgnoreCase("kysu") && KiemTra.kiemTraMa("kysu",array[1])) {
                         KySu kySu = new KySu(array[1], array[2], Integer.parseInt(array[3]), array[4],
                                 array[5], Integer.parseInt(array[6]));
                         kySuList.add(kySu);

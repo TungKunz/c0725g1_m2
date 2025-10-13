@@ -2,6 +2,7 @@ package bai3_nhan_su_cong_ty.repository;
 
 import Furama.util.ReadAndWriteFile;
 import bai3_nhan_su_cong_ty.entity.NhanVienVanPhong;
+import bai3_nhan_su_cong_ty.validate.KiemTra;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -17,7 +18,7 @@ public class NhanVienVanPhongRepository implements INhanVienRepository<NhanVienV
             for (String line : lines){
                 String[] array = line.split(",");
                 try{
-                    if(array[0].equalsIgnoreCase("vanphong")){
+                    if(array[0].equalsIgnoreCase("vanphong")&& KiemTra.kiemTraMa("vanphong",array[1])){
                         NhanVienVanPhong nhanVienVanPhong = new NhanVienVanPhong(array[1],array[2],Integer.parseInt(array[3]),array[4],Float.parseFloat(array[5]),Float.parseFloat(array[6]));
                         nhanVienVanPhongList.add(nhanVienVanPhong);
                     }

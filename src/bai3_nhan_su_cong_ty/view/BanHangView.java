@@ -1,6 +1,7 @@
 package bai3_nhan_su_cong_ty.view;
 
 import bai3_nhan_su_cong_ty.entity.NhanVienBanHang;
+import bai3_nhan_su_cong_ty.validate.KiemTra;
 
 import java.util.List;
 import java.util.Scanner;
@@ -17,6 +18,16 @@ public class BanHangView extends NhanVienView{
         nhanVienBanHang.setDoanhSo(nhapDoanhSo());
         nhanVienBanHang.setHoaHong(nhapHoaHong());
         return nhanVienBanHang;
+    }
+    private static String nhapMa(){
+        while (true){
+            System.out.println("Nhập mã nhân viên bán hàng có định dạng: BH-XXXX");
+            String ma=scanner.nextLine();
+            if(KiemTra.kiemTraMa("banhang",ma)){
+                return ma;
+            }
+            System.out.println("Nhập mã sai định dạng!!!");
+        }
     }
     private static int nhapDoanhSo(){
         while (true){

@@ -7,10 +7,10 @@ import java.util.Scanner;
 public class NhanVienView {
     private static final Scanner scanner = new Scanner(System.in);
 
-    public static String nhapMa() {
-        System.out.println("Nhập mã nhân viên ");
-        return scanner.nextLine();
-    }
+//    public static String nhapMa() {
+//        System.out.println("Nhập mã nhân viên ");
+//        return scanner.nextLine();
+//    }
 
     public static String nhapHoTen() {
         while (true) {

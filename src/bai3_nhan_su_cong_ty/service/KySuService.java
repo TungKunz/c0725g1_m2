@@ -1,13 +1,21 @@
 package bai3_nhan_su_cong_ty.service;
 
 import bai3_nhan_su_cong_ty.entity.KySu;
+import bai3_nhan_su_cong_ty.entity.NhanVien;
+import bai3_nhan_su_cong_ty.entity.NhanVienBanHang;
+import bai3_nhan_su_cong_ty.entity.NhanVienVanPhong;
 import bai3_nhan_su_cong_ty.repository.INhanVienRepository;
 import bai3_nhan_su_cong_ty.repository.KySuRepository;
+import bai3_nhan_su_cong_ty.repository.NhanVienBanHangRepository;
+import bai3_nhan_su_cong_ty.repository.NhanVienVanPhongRepository;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class KySuService implements INhanVienService<KySu> {
     private static final INhanVienRepository<KySu> kySuRepo = new KySuRepository();
+    private static final INhanVienRepository<NhanVienBanHang> banHangRepo = new NhanVienBanHangRepository();
+    private static final INhanVienRepository<NhanVienVanPhong> vanPhongRepo = new NhanVienVanPhongRepository();
 
     @Override
     public List<KySu> findAll() {

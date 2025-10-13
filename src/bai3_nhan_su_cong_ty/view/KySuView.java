@@ -1,6 +1,7 @@
 package bai3_nhan_su_cong_ty.view;
 
 import bai3_nhan_su_cong_ty.entity.KySu;
+import bai3_nhan_su_cong_ty.validate.KiemTra;
 
 import java.util.List;
 import java.util.Scanner;
@@ -17,6 +18,16 @@ public class KySuView extends NhanVienView{
         kySu.setChuyenNganh(nhapChuyenNganh());
         kySu.setBacKyThuat(nhapBacKyThuat());
         return kySu;
+    }
+    private static String nhapMa(){
+        while (true){
+            System.out.println("Nhập mã kỹ sư có định dạng: KS-XXXX");
+            String ma=scanner.nextLine();
+            if(KiemTra.kiemTraMa("kysu",ma)){
+                return ma;
+            }
+            System.out.println("Nhập mã sai định dạng!!!");
+        }
     }
     private static String nhapChuyenNganh(){
         System.out.println("Nhập chuyên ngành ");

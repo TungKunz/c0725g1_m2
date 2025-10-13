@@ -8,9 +8,9 @@ import bai3_nhan_su_cong_ty.service.INhanVienService;
 import bai3_nhan_su_cong_ty.service.KySuService;
 import bai3_nhan_su_cong_ty.service.NhanVienBanHangService;
 import bai3_nhan_su_cong_ty.service.NhanVienVanPhongService;
+import bai3_nhan_su_cong_ty.validate.KiemTra;
 import bai3_nhan_su_cong_ty.view.BanHangView;
 import bai3_nhan_su_cong_ty.view.KySuView;
-import bai3_nhan_su_cong_ty.view.NhanVienView;
 import bai3_nhan_su_cong_ty.view.VanPhongView;
 
 import java.util.ArrayList;
@@ -25,8 +25,7 @@ public class NhanVienController {
     private static final Scanner scanner = new Scanner(System.in);
 
     public static void NhanVienManager() {
-        boolean flag = true;
-        while (flag) {
+        while (true) {
             System.out.println("""
                     1. Thêm nhân sự
                     2. Hiển thị danh sách nhân sự theo loại
@@ -158,37 +157,56 @@ public class NhanVienController {
     }
 
     private static void xoaThongTinNhanVien() {
-        System.out.println("Nhập mã nhân viên bạn muốn xóa");
+        System.out.print("Nhập mã nhân viên bạn muốn xóa: ");
         String maNhanVien = scanner.nextLine();
-        KySu kySu = kySuService.findById(maNhanVien);
-        NhanVienVanPhong nhanVienVanPhong = vanPhongService.findById(maNhanVien);
-        NhanVienBanHang nhanVienBanHang = banHangService.findById(maNhanVien);
-        if (kySu != null) {
-            boolean check = kySuService.deleteById(kySu);
-            if (check) {
-
-                System.out.println("Xóa thông tin kỹ sư thành công");
-            } else {
-                System.out.println("Xóa thông tin kỹ sư không thành công");
-            }
-        } else if (nhanVienVanPhong != null) {
-            boolean check = vanPhongService.deleteById(nhanVienVanPhong);
-            if (check) {
-                System.out.println("Xóa thông tin nhân viên văn phòng thành công");
-            } else {
-                System.out.println("Xóa thông tin nhân viên văn phòng không thành công");
-            }
-        } else if (nhanVienBanHang != null) {
-            boolean check = banHangService.deleteById(nhanVienBanHang);
-            if (check) {
-                System.out.println("Xóa thông tin nhân viên bán hàng thành công");
-            } else {
-                System.out.println("Xóa thông tin nhân viên bán hàng không thành công");
-            }
-        } else {
-            System.out.println("Không tìm thấy mã nhân viên");
+        boolean check = KiemTra.kiemTraMa("kysu",maNhanVien);
+        String type="kỹ sư";
+        if(!check){
+            check=KiemTra.kiemTraMa("vanphong",maNhanVien);
+            type="văn phòng";
         }
+        if(!check){
+            check=KiemTra.kiemTraMa("banhang",maNhanVien);
+            type="bán hàng";
+        }
+        if (check) {
+            boolean result = false;
+
+            switch (type) {
+                case "kỹ sư":
+                    KySu kySu = kySuService.findById(maNhanVien);
+                    if (kySu != null) {
+                        result = kySuService.deleteById(kySu);
+                    }
+                    break;
+
+                case "văn phòng":
+                    NhanVienVanPhong nhanVienVanPhong = vanPhongService.findById(maNhanVien);
+                    if (nhanVienVanPhong != null) {
+                        result = vanPhongService.deleteById(nhanVienVanPhong);
+                    }
+                    break;
+
+                case "bán hàng":
+                    NhanVienBanHang nhanVienBanHang = banHangService.findById(maNhanVien);
+                    if (nhanVienBanHang != null) {
+                        result = banHangService.deleteById(nhanVienBanHang);
+                    }
+                    break;
+            }
+
+            if (result) {
+                System.out.println("Xóa thông tin nhân viên " + type + " thành công");
+            } else {
+                System.out.println("Xóa thông tin nhân viên " + type + " không thành công");
+            }
+
+        } else {
+            System.out.println("Không tìm thấy mã nhân viên nào trùng khớp");
+        }
+
     }
+
     private static void timKiem(){
         System.out.println("Nhập tên mà bạn muốn tìm kiếm");
         String ten= scanner.nextLine();
