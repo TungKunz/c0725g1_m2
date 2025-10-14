@@ -12,7 +12,12 @@ public class ElectricBill {
 
     public ElectricBill() {
     }
-
+    public ElectricBill(String customerId, LocalDate invoiceDate, double consumedKW, double unitPrice) {
+        this.customerId = customerId;
+        this.invoiceDate = invoiceDate;
+        this.consumedKW = consumedKW;
+        this.unitPrice = unitPrice;
+    }
     public ElectricBill(String customerId, LocalDate invoiceDate, double consumedKW, double unitPrice, double totalAmount) {
         this.customerId = customerId;
         this.invoiceDate = invoiceDate;

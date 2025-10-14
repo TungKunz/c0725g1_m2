@@ -28,8 +28,7 @@ public abstract class Person {
 
     @Override
     public String toString() {
-        return  "customId='" + customId + '\'' +
-                ", fullName='" + fullName + '\'';
+        return "fullName='" + fullName;
     }
     public abstract double calculateTotalAmount(double consumedKW, double unitPrice);
     public abstract String toInForCSV();

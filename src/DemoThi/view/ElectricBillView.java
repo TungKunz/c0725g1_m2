@@ -12,12 +12,11 @@ import java.util.Scanner;
 public class ElectricBillView {
     private static final Scanner scanner = new Scanner(System.in);
 
-    public static ElectricBill inputData(ElectricBill electricBill, double totalAmount){
+    public static ElectricBill inputData(ElectricBill electricBill){
         electricBill.setCustomerId(inputCustomerId());
         electricBill.setInvoiceDate(inputInvoiceDate());
         electricBill.setConsumedKW(inputConsumedKW());
         electricBill.setUnitPrice(inputUnitPrice());
-        electricBill.setTotalAmount(totalAmount);
         return electricBill;
     }
 public static String inputInvoicedId(){

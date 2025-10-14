@@ -119,14 +119,12 @@ public class PersonController {
         System.out.println("-----------------");
         displayCustomer();
         System.out.println("-------------------------------------------------------------");
-        String customId= ElectricBillView.inputCustomerId();
-        if(CheckPerson.checkId("vietnam",customId)){
-            VietnameseCustomer vietnameseCustomer=vietnameseCustomerService.findById(customId);
-            LocalDate invoiceDate=ElectricBillView.inputInvoiceDate();
-            double consumedKW=ElectricBillView.inputConsumedKW();
-            double unitPrice=ElectricBillView.inputUnitPrice();
-            double totalAmount=vietnameseCustomer.calculateTotalAmount(consumedKW,unitPrice);
-            ElectricBill electricBill=new ElectricBill(customId,invoiceDate,consumedKW,unitPrice,totalAmount);
+        ElectricBill electricBill= new ElectricBill();
+        ElectricBillView.inputData(electricBill);
+        if(CheckPerson.checkId("vietnam",electricBill.getCustomerId())){
+            VietnameseCustomer vietnameseCustomer=vietnameseCustomerService.findById(electricBill.getCustomerId());
+            double totalAmount=vietnameseCustomer.calculateTotalAmount(electricBill.getConsumedKW(),electricBill.getUnitPrice());
+            electricBill.setTotalAmount(totalAmount);
             boolean check=electricBillService.add(electricBill);
             if(check){
                 System.out.println("Thêm hóa đơn thành công");
@@ -134,13 +132,10 @@ public class PersonController {
                 System.out.println("Thêm hóa đơn không thành công");
             }
 
-        }else if(CheckPerson.checkId("foreign",customId)){
-            ForeignCustomer foreignCustomer=foreignCustomerService.findById(customId);
-            LocalDate invoiceDate=ElectricBillView.inputInvoiceDate();
-            double consumedKW=ElectricBillView.inputConsumedKW();
-            double unitPrice=ElectricBillView.inputUnitPrice();
-            double totalAmount=foreignCustomer.calculateTotalAmount(consumedKW,unitPrice);
-            ElectricBill electricBill=new ElectricBill(customId,invoiceDate,consumedKW,unitPrice,totalAmount);
+        }else if(CheckPerson.checkId("foreign",electricBill.getCustomerId())){
+            ForeignCustomer foreignCustomer=foreignCustomerService.findById(electricBill.getCustomerId());
+            double totalAmount=foreignCustomer.calculateTotalAmount(electricBill.getConsumedKW(),electricBill.getUnitPrice());
+            electricBill.setTotalAmount(totalAmount);
             boolean check=electricBillService.add(electricBill);
             if(check){
                 System.out.println("Thêm hóa đơn thành công");
@@ -159,68 +154,30 @@ public class PersonController {
     }
     private static void editElectricBill(){
         displayElectric();
-        System.out.println("Nhập số thứ tự hóa đơn bạn muốn sửa: ");
-        int index= Integer.parseInt(scanner.nextLine());
-        List<ElectricBill> electricBillList= electricBillService.findAll();
-        ElectricBill editElectric= electricBillList.get(index-1);
-        List<Person> listAll= new ArrayList<>();
-        List<VietnameseCustomer> vietnameseCustomerList=vietnameseCustomerService.findAll();
-        List<ForeignCustomer> foreignCustomerList=foreignCustomerService.findAll();
-        listAll.addAll(vietnameseCustomerList);
-        listAll.addAll(foreignCustomerList);
-        String customerId;
-        String type="";
-        boolean found=false;
-        while (true) {
-            customerId = ElectricBillView.inputCustomerId();
-            for (Person p : listAll) {
-                if (p.getCustomId().equals(customerId)) {
-                    if (CheckPerson.checkId("vietnam", p.getCustomId())) {
-                        type = "vietnam";
-                    } else {
-                        type = "foreign";
-                    }
-                    found = true;
-                    break;
-                }
+        int index;
+        try {
+            System.out.println("Nhập số thứ tự hóa đơn bạn muốn sửa: ");
+            index = Integer.parseInt(scanner.nextLine());
+            List<ElectricBill> electricBillList = electricBillService.findAll();
+
+            if (index < 1 || index > electricBillList.size()) {
+                System.out.println("Số thứ tự không hợp lệ!");
+                return;
             }
-            if (found) break;
-            System.out.println("Không tìm thấy mã khách hàng. Vui lòng nhập lại!");
-        }
-        if(type.equals("vietnam")){
-            VietnameseCustomer vietnameseCustomer=vietnameseCustomerService.findById(customerId);
-            editElectric.setCustomerId(customerId);
-            LocalDate invoiceDate=ElectricBillView.inputInvoiceDate();
-            editElectric.setInvoiceDate(invoiceDate);
-            double consumedKW=ElectricBillView.inputConsumedKW();
-            editElectric.setConsumedKW(consumedKW);
-            double unitPrice=ElectricBillView.inputUnitPrice();
-            editElectric.setUnitPrice(unitPrice);
-            double totalAmount=vietnameseCustomer.calculateTotalAmount(consumedKW,unitPrice);
-            editElectric.setTotalAmount(totalAmount);
-            boolean check=electricBillService.editById(editElectric);
+
+            ElectricBill editElectric = electricBillList.get(index - 1);
+            ElectricBill electric=ElectricBillView.inputData(editElectric);
+            boolean check= electricBillService.editById(electric);
             if(check){
-                System.out.println("Sửa hóa đơn thành công");
+                System.out.println("Cập nhật thành công");
             }else {
-                System.out.println("Sửa hóa đơn không thành công");
+                System.out.println("Cập nhật không thành công");
             }
-        }else {
-            ForeignCustomer foreignCustomer=foreignCustomerService.findById(customerId);
-            editElectric.setCustomerId(customerId);
-            LocalDate invoiceDate=ElectricBillView.inputInvoiceDate();
-            editElectric.setInvoiceDate(invoiceDate);
-            double consumedKW=ElectricBillView.inputConsumedKW();
-            editElectric.setConsumedKW(consumedKW);
-            double unitPrice=ElectricBillView.inputUnitPrice();
-            editElectric.setUnitPrice(unitPrice);
-            double totalAmount=foreignCustomer.calculateTotalAmount(consumedKW,unitPrice);
-            editElectric.setTotalAmount(totalAmount);
-            boolean check=electricBillService.editById(editElectric);
-            if(check){
-                System.out.println("Thêm hóa đơn thành công");
-            }else {
-                System.out.println("Thêm hóa đơn không thành công");
-            }
+
+        } catch (NumberFormatException e) {
+            System.out.println("Vui lòng nhập số hợp lệ!");
         }
+
+
     }
 }
