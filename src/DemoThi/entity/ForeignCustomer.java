@@ -21,9 +21,8 @@ public class ForeignCustomer extends Person {
 
     @Override
     public String toString() {
-        return "ForeignCustomer{" + super.toString() +","+
-                " nationality= " + nationality + '\'' +
-                '}';
+        return "ForeignCustomer " + super.toString() +","+
+                " nationality= " + nationality + '\'' ;
     }
 
     @Override

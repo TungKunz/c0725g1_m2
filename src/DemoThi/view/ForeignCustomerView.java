@@ -29,8 +29,8 @@ public class ForeignCustomerView extends PersonView{
             System.out.println("---------------------------------------------------------------------------");
             return;
         }
-        for (ForeignCustomer nn:foreignCustomerList){
-            System.out.println(nn);
+        for (int i = 0; i < foreignCustomerList.size(); i++) {
+            System.out.println((i+1) + ". " + foreignCustomerList.get(i).toString());
         }
         System.out.println("---------------------------------------------------------------------------");
     }

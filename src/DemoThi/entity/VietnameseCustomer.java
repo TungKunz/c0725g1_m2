@@ -31,10 +31,9 @@ public class VietnameseCustomer extends Person {
 
     @Override
     public String toString() {
-        return "VietnameseCustomer{" + super.toString() +","+
+        return "VietnameseCustomer " + super.toString() +","+
                 " customerType = " + customerType + '\'' +
-                ", consumptionLimit = " + consumptionLimit +
-                '}';
+                ", consumptionLimit = " + consumptionLimit;
     }
 
     @Override

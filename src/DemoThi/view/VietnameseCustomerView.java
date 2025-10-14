@@ -36,8 +36,8 @@ public class VietnameseCustomerView extends PersonView{
             System.out.println("---------------------------------------------------------------------------");
             return;
         }
-        for (VietnameseCustomer vn:vietnameseCustomerList){
-            System.out.println(vn);
+        for (int i = 0; i < vietnameseCustomerList.size(); i++) {
+            System.out.println((i+1) +". "+vietnameseCustomerList.get(i).toString());
         }
         System.out.println("---------------------------------------------------------------------------");
     }
